@@ -10,6 +10,7 @@
   <ItemGroup>
     <Content Remove="Data\countries+states+cities.json" />
     <Content Remove="Data\currencies.json" />
+    <Content Remove="Data\languages.json" />
     <Content Remove="Data\services_categories.json" />
   </ItemGroup>
 
@@ -21,6 +22,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Data\countries+states+cities.json" />
     <EmbeddedResource Include="Data\currencies.json" />
+    <EmbeddedResource Include="Data\languages.json" />
     <EmbeddedResource Include="Data\services_categories.json" />
     <EmbeddedResource Include="Data\skills.txt" />
     <EmbeddedResource Include="Data\spotterful.txt" />

@@ -541,26 +541,30 @@ namespace HenwoniDataModifierAPI.Automatic
 
         public async Task SetupLanguagesAsync(ApplicationDbContext dbContext)
         {
-            HttpClient httpClient = new HttpClient();
-            using HttpResponseMessage response = await httpClient.GetAsync("https://gist.githubusercontent.com/jrnk/8eb57b065ea0b098d571/raw/936a6f652ebddbe19b1d100a60eedea3652ccca6/ISO-639-1-language.json");
-            response.EnsureSuccessStatusCode();
-            List<Data.External.Languages.ExLanguage>? jsonResponse = await response.Content.ReadFromJsonAsync<List<Data.External.Languages.ExLanguage>>();
-            if (jsonResponse != null)
-            {
-                int c = 0;
-                foreach (Data.External.Languages.ExLanguage exLanguage in jsonResponse)
-                {
-                    String systemName = exLanguage.Name.GenerateSlug();
+            var assembly = Assembly.GetExecutingAssembly();
+            var t = Assembly.GetExecutingAssembly().GetManifestResourceNames();
 
-                    Language c2 = await dbContext.Languages.Where(x => x.SystemName == systemName).FirstOrDefaultAsync();
-                    if (c2 == null)
+            using (Stream stream = assembly.GetManifestResourceStream("HenwoniDataModifierAPI.Data.languages.json"))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string json = reader.ReadToEnd();
+                    List<Data.External.Languages.ExLanguage> jsonResponse = JsonSerializer.Deserialize<List<Data.External.Languages.ExLanguage>>(json);
+                    int c = 0;
+                    foreach (Data.External.Languages.ExLanguage exLanguage in jsonResponse)
                     {
-                        c2 = new Language { Title = exLanguage.Name, SystemName = systemName };
-                        dbContext.Languages.Add(c2);
+                        String systemName = exLanguage.Name.GenerateSlug();
+
+                        Language c2 = await dbContext.Languages.Where(x => x.SystemName == systemName).FirstOrDefaultAsync();
+                        if (c2 == null)
+                        {
+                            c2 = new Language { Title = exLanguage.Name, SystemName = systemName };
+                            dbContext.Languages.Add(c2);
+                        }
                     }
+                    await dbContext.SaveChangesAsync();
                 }
             }
-            await dbContext.SaveChangesAsync();
         }
 
         public async Task SetupJobIndustriesAsync(ApplicationDbContext dbContext)
