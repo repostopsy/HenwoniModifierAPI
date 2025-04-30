@@ -3202,7 +3202,6 @@ Customer Sales Analyst
 Customer Sales Lead
 Customer Sales Representative
 Customer Service
-Customer Service
 Customer Service Admin
 Customer Service Administrator
 Customer Service Advisor
@@ -3306,7 +3305,6 @@ Cyber Fusion Center Triage Analyst
 Cyber Security Analyst
 Cyber-Security Architect
 Cyber Security Consultant
-Cyber security Consultant
 Cyber Security Defense Analyst
 Cyber Security Engineer
 Cybers Security Instructor
@@ -3502,7 +3500,6 @@ Delivery Director
 Delivery Dispatcher
 Delivery Driver Helper
 Delivery Driver
-Delivery Driver Helper
 Delivery Helper
 Delivery Lead
 Delivery Manager
@@ -8484,7 +8481,6 @@ Organizational Change Manager
 Organizational Development Advisor
 Organizational Development Director
 Organizational Development Consultant
-Organizational Development Director
 Organizer
 Orientation Coordinator
 Orthodontic Assistant
@@ -10116,7 +10112,6 @@ Recreation Server
 Recreation Specialist
 Recreation Summer Student
 Recreation Supervisor
-Recreation Programmer
 Recreation Server
 Recreation Summer Student
 Recreation Therapist

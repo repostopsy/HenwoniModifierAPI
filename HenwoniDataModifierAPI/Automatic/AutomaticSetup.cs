@@ -111,18 +111,18 @@ namespace HenwoniDataModifierAPI.Automatic
                     System.Diagnostics.Debug.WriteLine(titles.Count);
                     if (await dbContext.RefCommonJobTitles.CountAsync() < titles.Count)
                     {
-                        int i = 0;
                         foreach (string title in titles)
                         {
                             string b = title.Trim();
-                            if (await dbContext.RefCommonJobTitles.Where(x => x.Title == b).FirstOrDefaultAsync() == null)
+                            string systemName = title.GenerateSlug();
+                            if (await dbContext.RefCommonJobTitles.Where(x => x.SystemName == systemName).FirstOrDefaultAsync() == null)
                             {
                                 RefCommonJobTitle jobTitle = new RefCommonJobTitle();
-                                jobTitle.SystemName = title.GenerateSlug();
+                                jobTitle.SystemName = systemName;
                                 jobTitle.Title = title;
                                 jobTitle.Description = title;
-                                jobTitle.DateUpdated = DateTime.UtcNow.AddDays(i);
-                                jobTitle.DateCreated = DateTime.UtcNow.AddDays(i);
+                                jobTitle.DateUpdated = DateTime.UtcNow;
+                                jobTitle.DateCreated = DateTime.UtcNow;
                                 jobTitle.PluralTitle = title + "s";
                                 //@TODO: Create an event that will be used to update the UI status text
                                 /*Dispatcher.Invoke(() =>
@@ -131,10 +131,8 @@ namespace HenwoniDataModifierAPI.Automatic
 								});*/
                                 dbContext.RefCommonJobTitles.Add(jobTitle);
                             }
-                            i++;
-                            if (i > 50) i = 0;
+                            await dbContext.SaveChangesAsync();
                         }
-                        await dbContext.SaveChangesAsync();
                     }
                 }
             }
