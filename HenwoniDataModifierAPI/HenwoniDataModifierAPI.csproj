@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <None Remove="Data\skills.txt" />
-    <None Remove="Data\spotterful.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,7 +24,7 @@
     <EmbeddedResource Include="Data\languages.json" />
     <EmbeddedResource Include="Data\services_categories.json" />
     <EmbeddedResource Include="Data\skills.txt" />
-    <EmbeddedResource Include="Data\spotterful.txt" />
+    <EmbeddedResource Include="Data\jobtitlestext.txt" />
   </ItemGroup>
 
   <ItemGroup>

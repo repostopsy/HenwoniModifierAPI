@@ -14,6 +14,7 @@ using HenwoniDataModifierAPI.Models.Services;
 using HenwoniDataModifierAPI.Models.Organisation;
 using HenwoniDataModifierAPI.Models.Employment;
 using DotLiquid;
+using System.Xml;
 
 namespace HenwoniDataModifierAPI.Automatic
 {
@@ -35,25 +36,6 @@ namespace HenwoniDataModifierAPI.Automatic
         {
             using IServiceScope scope = _serviceProvider.CreateScope();
             await using ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-
-            var titles = await context.RefCommonJobTitles.ToListAsync();
-            foreach (var title in titles)
-            {
-                var duplicates = await context.RefCommonJobTitles.Where(x => x.Id != title.Id && x.Title == title.Title).ToListAsync();
-                if (duplicates.Count > 0)
-                {
-                    context.RefCommonJobTitles.RemoveRange(duplicates);
-                }
-                var sameSystemNames = await context.RefCommonJobTitles.Where(x => x.Id != title.Id && x.SystemName == title.SystemName).ToListAsync();
-                foreach (var ssn in sameSystemNames)
-                {
-                    ssn.SystemName = ssn.SystemName + "2";
-                }
-            }
-            await context.SaveChangesAsync();
-
-
             await SetupLanguagesAsync(context);
             await SetupJobTitlesAsync(context);
             await SetupOtherEntitiesAsync(context);
@@ -90,12 +72,48 @@ namespace HenwoniDataModifierAPI.Automatic
                 dbContext.CandidateRoles.Add(y4);
             }
         }
+
         public async Task SetupJobTitlesAsync(ApplicationDbContext dbContext)
         {
+            // await SetupJobTitlesUsingJobTitlesTextAsync();
+            var assembly = Assembly.GetExecutingAssembly();
+            var t = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            using (Stream stream = assembly.GetManifestResourceStream("HenwoniDataModifierAPI.Data.jobtitles.json"))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string txt = "";
+                    while (!reader.EndOfStream)
+                    {
+                        txt += reader.ReadLine() + "\n";
+                    }
+                    List<RefCommonJobTitle> jobTitles = JsonSerializer.Deserialize<List<RefCommonJobTitle>>(txt);
+                    foreach (var jb in jobTitles)
+                    {
+                        var existing = await dbContext.RefCommonJobTitles.Where(x => x.SystemName == jb.SystemName).FirstOrDefaultAsync();
+                        if (existing!=null)
+                        {
+                            existing = new RefCommonJobTitle();
+                            existing.CopyPropertiesFrom(jb);
+                            dbContext.RefCommonJobTitles.Add(existing);
+                            existing.Description = jb.Title;
+                            existing.DateCreated = DateTime.UtcNow;
+                            existing.PluralTitle = jb.Title + "s";
+                        }
+                        jb.DateUpdated = DateTime.UtcNow;
+                    }
+                    await dbContext.SaveChangesAsync();
+                }
+            }
+        }
+
+        private async Task SetupJobTitlesUsingJobTitlesTextAsync()
+        {
+
             var assembly = Assembly.GetExecutingAssembly();
             var t = Assembly.GetExecutingAssembly().GetManifestResourceNames();
 
-            using (Stream stream = assembly.GetManifestResourceStream("HenwoniDataModifierAPI.Data.spotterful.txt"))
+            using (Stream stream = assembly.GetManifestResourceStream("HenwoniDataModifierAPI.Data.jobtitlestext.txt"))
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {
@@ -108,13 +126,19 @@ namespace HenwoniDataModifierAPI.Automatic
                             titles.Add(title.Trim());
                         }
                     }
-                    System.Diagnostics.Debug.WriteLine(titles.Count);
                     if (await dbContext.RefCommonJobTitles.CountAsync() < titles.Count)
                     {
                         foreach (string title in titles)
                         {
+                            if (await dbContext.RefCommonJobTitles.AnyAsync(x => x.Title == title)) continue;
                             string b = title.Trim();
                             string systemName = title.GenerateSlug();
+                            int f = 1;
+                            while (await dbContext.RefCommonJobTitles.Where(x => x.SystemName == systemName).AnyAsync(x => x.SystemName == systemName))
+                            {
+                                systemName = systemName + f;
+                                f++;
+                            }
                             if (await dbContext.RefCommonJobTitles.Where(x => x.SystemName == systemName).FirstOrDefaultAsync() == null)
                             {
                                 RefCommonJobTitle jobTitle = new RefCommonJobTitle();
@@ -124,11 +148,6 @@ namespace HenwoniDataModifierAPI.Automatic
                                 jobTitle.DateUpdated = DateTime.UtcNow;
                                 jobTitle.DateCreated = DateTime.UtcNow;
                                 jobTitle.PluralTitle = title + "s";
-                                //@TODO: Create an event that will be used to update the UI status text
-                                /*Dispatcher.Invoke(() =>
-								{
-									LoadStatus.Text = "Inserting " + jobTitle.Title;
-								});*/
                                 dbContext.RefCommonJobTitles.Add(jobTitle);
                             }
                             await dbContext.SaveChangesAsync();
@@ -136,6 +155,7 @@ namespace HenwoniDataModifierAPI.Automatic
                     }
                 }
             }
+
         }
 
         public async Task SetupLocationsAsync(ApplicationDbContext dbContext)
