@@ -9,5 +9,6 @@
         public String Template { get; set; }
         public String Notes { get; set; }
         public String CommonJobTitle { get; set; }
+        public String CJTitle { get; set; }
     }
 }

@@ -39,7 +39,12 @@ namespace HenwoniDataModifierAPI.Controllers
                 _context.RefCJTDescriptionTemplates.Add(existing);
             }
             existing.CopyPropertiesFrom(request);
-            var r = await _context.RefCommonJobTitles.Where(x => x.SystemName == request.CommonJobTitle).FirstOrDefaultAsync();
+            var v = await _context.RefCommonJobTitles.Where(x => x.SystemName == request.CommonJobTitle).ToListAsync();
+            var r = v.FirstOrDefault();
+            if (v.Count()>1 || v.Count()==0)
+            {
+                r = await _context.RefCommonJobTitles.Where(x => x.SystemName == request.CJTitle).FirstOrDefaultAsync();
+            }
             existing.RefCommonJobTitle = r;
             if (!String.IsNullOrEmpty(request.Language))
             {
