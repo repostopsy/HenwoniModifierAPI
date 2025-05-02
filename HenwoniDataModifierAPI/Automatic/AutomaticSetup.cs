@@ -91,7 +91,7 @@ namespace HenwoniDataModifierAPI.Automatic
                     foreach (var jb in jobTitles)
                     {
                         var existing = await dbContext.RefCommonJobTitles.Where(x => x.SystemName == jb.SystemName).FirstOrDefaultAsync();
-                        if (existing!=null)
+                        if (existing==null)
                         {
                             existing = new RefCommonJobTitle();
                             existing.CopyPropertiesFrom(jb);
