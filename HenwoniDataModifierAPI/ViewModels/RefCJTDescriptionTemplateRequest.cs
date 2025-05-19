@@ -10,5 +10,6 @@
         public String Notes { get; set; }
         public String CommonJobTitle { get; set; }
         public String CJTitle { get; set; }
+        public String? Parent { get; set; }
     }
 }

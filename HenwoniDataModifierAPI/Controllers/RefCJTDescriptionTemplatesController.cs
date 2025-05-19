@@ -31,7 +31,7 @@ namespace HenwoniDataModifierAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<RefCJTDescriptionTemplate>> UpdateTemplateDescriptionAsync(RefCJTDescriptionTemplateRequest request)
         {
-            var existing = await _context.RefCJTDescriptionTemplates.Where(x => x.SystemName == request.SystemName).FirstOrDefaultAsync();
+            RefCJTDescriptionTemplate existing = await _context.RefCJTDescriptionTemplates.Where(x => x.SystemName == request.SystemName).FirstOrDefaultAsync();
             if (existing==null)
             {
                 // Create it.
@@ -49,6 +49,20 @@ namespace HenwoniDataModifierAPI.Controllers
             if (!String.IsNullOrEmpty(request.Language))
             {
                 existing.Language = await _context.Languages.Where(x => x.SystemName == request.Language).FirstOrDefaultAsync();
+            }
+            if (!String.IsNullOrEmpty(request.Parent))
+            {
+                var parent = await _context.RefCJTDescriptionTemplates.Where(x => x.SystemName == request.Parent).FirstOrDefaultAsync();
+                if (parent != null) {
+                    existing.ParentId = parent.Id;
+                }else
+                {
+                    return BadRequest(new
+                    {
+                        Success = false,
+                        Message = "Description parent not found"
+                    });
+                }
             }
             await _context.SaveChangesAsync();
             return existing;

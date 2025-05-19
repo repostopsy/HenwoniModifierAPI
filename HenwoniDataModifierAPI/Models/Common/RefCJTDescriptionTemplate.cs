@@ -22,5 +22,8 @@ namespace HenwoniDataModifierAPI.Models.Common
         public virtual RefCommonJobTitle RefCommonJobTitle { get; set; }
         public virtual JobLevel? JobLevel { get; set; }
         public virtual Language? Language { get; set; }
+        public long? ParentId { get; set; }
+        public virtual ICollection<RefCJTDescriptionTemplateTag> Tags { get; }
+        public virtual ICollection<RefCJTDescriptionTemplateAlias> Aliases { get; }
     }
 }
