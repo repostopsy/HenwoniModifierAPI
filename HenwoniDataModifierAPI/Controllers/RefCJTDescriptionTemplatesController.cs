@@ -1,4 +1,5 @@
-﻿using DotLiquid.Util;
+﻿using Azure.Core;
+using DotLiquid.Util;
 using HenwoniDataModifierAPI.Data;
 using HenwoniDataModifierAPI.Models.Common;
 using HenwoniDataModifierAPI.Utilities;
@@ -68,29 +69,19 @@ namespace HenwoniDataModifierAPI.Controllers
             return existing;
         }
 
-        [HttpGet]
-        public IEnumerable<string> Get()
+        /*[HttpGet("")]
+        public async Task<IEnumerable<RefCJTDescriptionTemplate>> GetAsync()
         {
-            return new string[] { "value1", "value2" };
-        }
+            List<RefCJTDescriptionTemplate> templates = await _context.RefCJTDescriptionTemplates.ToListAsync();
+            return templates;
+        }*/
 
-        // GET api/<RefCJTDescriptionTemplatesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("/{systemName}")]
+        public async Task<ActionResult<RefCJTDescriptionTemplate>> GetTemplateAsync(string systemName)
         {
-            return "value";
-        }
-
-        // PUT api/<RefCJTDescriptionTemplatesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<RefCJTDescriptionTemplatesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            RefCJTDescriptionTemplate template = await _context.RefCJTDescriptionTemplates.Where(x=>x.SystemName==systemName).FirstOrDefaultAsync();
+            if (template != null) return NotFound();
+            return template;
         }
     }
 }

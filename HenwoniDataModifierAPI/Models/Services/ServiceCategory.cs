@@ -16,10 +16,14 @@ namespace HenwoniDataModifierAPI.Models.Services
 		public string? Excerpt { get; set; }
 		public string? Content { get; set; }
         public long Count { get; set; }
-		public virtual ServiceCategory? Parent { get; set; }
-		public virtual ICollection<ServiceCategory> SubServiceCategories { get; set; }
-		public virtual JobIndustry? JobIndustryRef { get; set; }
+        [JsonIgnore]
+        public virtual ServiceCategory? Parent { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<ServiceCategory> SubServiceCategories { get; set; }
+        [JsonIgnore]
+        public virtual JobIndustry? JobIndustryRef { get; set; }
         public bool IsDeleted { get; set; } = false;
+        [JsonIgnore]
         public virtual ICollection<CommonServiceReference> CommonServiceReferences { get; set; }
     }
 }

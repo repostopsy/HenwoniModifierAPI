@@ -8,6 +8,7 @@ using HenwoniDataModifierAPI.Models.Skills;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using HenwoniDataModifierAPI.Models.Common;
+using HenwoniDataModifierAPI.Models.Services.Common;
 
 namespace HenwoniDataModifierAPI.Data
 {
@@ -62,6 +63,12 @@ namespace HenwoniDataModifierAPI.Data
         public DbSet<ServiceTemplateEntertainmentType> ServiceTemplateEntertainmentTypes { get; set; }
         public DbSet<ServiceTemplateEntertainmentForm> ServiceTemplateEntertainmentForms { get; set; }
         public DbSet<PlatformAppVersion> PlatformAppVersions { get; set; }
+        
+        public DbSet<RefCServiceTitle> RefCServiceTitles { get; set; }
+        public DbSet<RefCServiceTitleTemplate> RefCServiceTitleTemplates { get; set; }
+        public DbSet<RefCServiceTitleTemplateAlias> RefCServiceTitleTemplateAliases { get; set; }
+        public DbSet<RefCServiceTitleTemplateTag> RefCServiceTitleTemplateTags { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -73,6 +80,11 @@ namespace HenwoniDataModifierAPI.Data
                 .HasOne(t => t.PrimaryJobIndustry)
                 .WithOne()
                 .HasForeignKey<CandidateSkill>(c => c.PrimaryJobIndustryId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<RefCServiceTitleTemplate>()
+                .HasOne(t => t.RefCServiceTitle)
+                .WithMany(x => x.RefCServiceTitleTemplates)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ContinentRegion>()

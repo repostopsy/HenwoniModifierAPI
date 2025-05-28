@@ -4,6 +4,7 @@ using HenwoniDataModifierAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HenwoniDataModifierAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250526164154_Migration9")]
+    partial class Migration9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1400,9 +1403,6 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.Property<string>("PluralTitle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("ServiceCategoryId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("SystemName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1414,8 +1414,6 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("LanguageId");
-
-                    b.HasIndex("ServiceCategoryId");
 
                     b.ToTable("RefCServiceTitles");
                 });
@@ -2560,13 +2558,7 @@ namespace HenwoniDataModifierAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HenwoniDataModifierAPI.Models.Services.ServiceCategory", "ServiceCategory")
-                        .WithMany()
-                        .HasForeignKey("ServiceCategoryId");
-
                     b.Navigation("Language");
-
-                    b.Navigation("ServiceCategory");
                 });
 
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Services.Common.RefCServiceTitleTemplate", b =>
