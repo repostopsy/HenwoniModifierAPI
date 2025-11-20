@@ -1,6 +1,8 @@
 ﻿
 
 
+using System.Text.Json.Serialization;
+
 namespace HenwoniDataModifierAPI.Models.Location
 {
     public class CountryTimeZone
@@ -18,6 +20,7 @@ namespace HenwoniDataModifierAPI.Models.Location
         public string Abbreviation { get; set; }
 
         public string TzName { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Country> Countries { get; set; }
 	}
 }

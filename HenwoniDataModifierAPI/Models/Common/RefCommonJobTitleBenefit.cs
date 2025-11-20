@@ -1,6 +1,10 @@
 ﻿
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using HenwoniDataModifierAPI.Models;
+using HenwoniDataModifierAPI.Models.Employment;
+using HenwoniDataModifierAPI.Models.Location;
 
 namespace HenwoniDataModifierAPI.Common.Models
 {
@@ -31,6 +35,12 @@ namespace HenwoniDataModifierAPI.Common.Models
 				_description = value;
 				OnPropertyChanged("SourceId");
 			}
-		}
-	}
+        }
+        public virtual ApplicationUser? Author { get; set; }
+        public bool Approved { get; set; }
+        public double Rating { get; set; }
+        [JsonIgnore]
+        public virtual Language? Language { get; set; }
+        public virtual RefCommonJobTitleBenefit? Parent { get; set; }
+    }
 }

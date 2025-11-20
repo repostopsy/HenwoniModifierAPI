@@ -12,10 +12,13 @@ namespace HenwoniDataModifierAPI.Models.Translator
         public string DestinSystemName { get; set; }
         public string Title { get; set; }
         public string? Excerpt { get; set; }
+        public string? DefaultLanguageText { get; set; }
         public string Text { get; set; }
-        public string EditorUserName { get; set; }
+        public virtual ApplicationUser? Author { get; set; }
+        public bool Approved { get; set; }
+        public double Rating { get; set; }
         public virtual Language Language { get; set; }
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
         public DateTime DateUpdated { get; set; }
     }
 }

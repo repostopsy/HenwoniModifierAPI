@@ -21,12 +21,14 @@ namespace HenwoniDataModifierAPI.Models.Location
 		public virtual Continent? Continent { get; set; }
 		public virtual ContinentRegion? ContinentRegion { get; set; }
         public string Nationality { get; set; }
+        [JsonIgnore]
 		public virtual ICollection<CountryTranslations> Translations { get; set; }
         public virtual ICollection<CountryTimeZone> TimeZones { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public string? Emoji { get; set; }
         public string? EmojiU { get; set; }
+        [JsonIgnore]
         public virtual ICollection<State> States { get; set; }
         public string? TopologyId { get; set; }
 		public long JobsCount { get; set; }

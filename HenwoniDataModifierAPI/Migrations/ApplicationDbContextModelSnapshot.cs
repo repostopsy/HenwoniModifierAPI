@@ -70,7 +70,63 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.ToTable("CountryCountryTimeZone");
                 });
 
-            modelBuilder.Entity("HenwoniDataModifierAPI.ApplicationUser", b =>
+            modelBuilder.Entity("HenwoniDataModifierAPI.Common.Models.RefCommonJobTitleBenefit", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Excerpt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("LanguageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<long?>("RefCommonJobTitleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("SystemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("RefCommonJobTitleId");
+
+                    b.ToTable("RefCommonJobTitleBenefit");
+                });
+
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -90,7 +146,9 @@ namespace HenwoniDataModifierAPI.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -137,41 +195,6 @@ namespace HenwoniDataModifierAPI.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("HenwoniDataModifierAPI.Common.Models.RefCommonJobTitleBenefit", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Excerpt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("RefCommonJobTitleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("SystemName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RefCommonJobTitleId");
-
-                    b.ToTable("RefCommonJobTitleBenefit");
                 });
 
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Article", b =>
@@ -265,6 +288,138 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.ToTable("PortfolioStyles");
                 });
 
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Common.RefCJTDTemplateIntro", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("LanguageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<long>("RefCJTDescriptionTemplateId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ReferenceId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("RefCJTDescriptionTemplateId");
+
+                    b.ToTable("Intros");
+                });
+
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Common.RefCJTDTemplateResponsibility", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("LanguageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<long>("RefCJTDescriptionTemplateId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ReferenceId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("RefCJTDescriptionTemplateId");
+
+                    b.ToTable("Responsibilities");
+                });
+
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Common.RefCJTDTemplateSkillExperience", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("LanguageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<long>("RefCJTDescriptionTemplateId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ReferenceId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("RefCJTDescriptionTemplateId");
+
+                    b.ToTable("SkillsExperiences");
+                });
+
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Common.RefCJTDescriptionTemplate", b =>
                 {
                     b.Property<long>("Id")
@@ -272,6 +427,18 @@ namespace HenwoniDataModifierAPI.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Excerpt")
                         .HasColumnType("nvarchar(max)");
@@ -283,11 +450,13 @@ namespace HenwoniDataModifierAPI.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<long?>("ParentId")
                         .HasColumnType("bigint");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
 
                     b.Property<long?>("RefCServiceTitleId")
                         .HasColumnType("bigint");
@@ -301,13 +470,15 @@ namespace HenwoniDataModifierAPI.Migrations
 
                     b.Property<string>("Template")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("JobLevelId");
 
@@ -328,6 +499,12 @@ namespace HenwoniDataModifierAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Excerpt")
                         .HasColumnType("nvarchar(max)");
 
@@ -336,6 +513,9 @@ namespace HenwoniDataModifierAPI.Migrations
 
                     b.Property<long?>("ParentId")
                         .HasColumnType("bigint");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
 
                     b.Property<long?>("RefCJTDescriptionTemplateId")
                         .HasColumnType("bigint");
@@ -349,6 +529,8 @@ namespace HenwoniDataModifierAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("LanguageId");
 
@@ -365,6 +547,12 @@ namespace HenwoniDataModifierAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Excerpt")
                         .HasColumnType("nvarchar(max)");
 
@@ -373,6 +561,9 @@ namespace HenwoniDataModifierAPI.Migrations
 
                     b.Property<long?>("ParentId")
                         .HasColumnType("bigint");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
 
                     b.Property<string>("SystemName")
                         .IsRequired()
@@ -383,6 +574,8 @@ namespace HenwoniDataModifierAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("LanguageId");
 
@@ -396,6 +589,12 @@ namespace HenwoniDataModifierAPI.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<double?>("AverageSalary")
                         .HasColumnType("float");
@@ -421,8 +620,17 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.Property<long?>("JobLevelId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("LanguageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("PluralTitle")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
 
                     b.Property<string>("SystemName")
                         .IsRequired()
@@ -434,7 +642,11 @@ namespace HenwoniDataModifierAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AuthorId");
+
                     b.HasIndex("JobLevelId");
+
+                    b.HasIndex("LanguageId");
 
                     b.HasIndex("SystemName")
                         .IsUnique();
@@ -449,6 +661,12 @@ namespace HenwoniDataModifierAPI.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<long?>("CityId")
                         .HasColumnType("bigint");
@@ -466,10 +684,15 @@ namespace HenwoniDataModifierAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
                     b.Property<long?>("StateId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("CityId");
 
@@ -541,24 +764,32 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.ToTable("JobContractAuditingRequirements");
                 });
 
-            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Employment.JobContractType", b =>
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Employment.JobFinanceSchemeType", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Excerpt")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<long>("LanguageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("SystemName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -566,10 +797,9 @@ namespace HenwoniDataModifierAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SystemName")
-                        .IsUnique();
+                    b.HasIndex("LanguageId");
 
-                    b.ToTable("JobContractTypes");
+                    b.ToTable("JobFinanceSchemeTypes");
                 });
 
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Employment.JobIndustry", b =>
@@ -579,6 +809,12 @@ namespace HenwoniDataModifierAPI.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
@@ -592,8 +828,14 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.Property<long>("JobsCount")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("LanguageId")
+                        .HasColumnType("bigint");
+
                     b.Property<long?>("ParentId")
                         .HasColumnType("bigint");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
 
                     b.Property<long?>("RefCServiceTitleId")
                         .HasColumnType("bigint");
@@ -611,6 +853,10 @@ namespace HenwoniDataModifierAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("LanguageId");
+
                     b.HasIndex("ParentId");
 
                     b.HasIndex("RefCServiceTitleId");
@@ -618,6 +864,50 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.HasIndex("RefCommonJobTitleId");
 
                     b.ToTable("JobIndustries");
+                });
+
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Employment.JobLayoutType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("LanguageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("SystemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("SystemName")
+                        .IsUnique();
+
+                    b.ToTable("JobLayoutTypes");
                 });
 
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Employment.JobLevel", b =>
@@ -634,6 +924,15 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<long?>("LanguageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
                     b.Property<string>("SystemName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -643,6 +942,10 @@ namespace HenwoniDataModifierAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("ParentId");
 
                     b.ToTable("JobLevels");
                 });
@@ -999,13 +1302,34 @@ namespace HenwoniDataModifierAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Charset")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Flag")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ISO6391")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ISO6392")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ISO6393")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("LocaleTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NativeName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SystemName")
@@ -1119,6 +1443,108 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.ToTable("Towns");
                 });
 
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Location.Translation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DefaultLanguageText")
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DestinSystemName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Excerpt")
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("LanguageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("SystemContextIdentity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SystemName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("Translations");
+                });
+
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Networks.MyNetworkCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Excerpt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("LanguageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SystemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("MyNetworkCategories");
+                });
+
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Organisation.CandidateRole", b =>
                 {
                     b.Property<int>("Id")
@@ -1182,6 +1608,44 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.ToTable("OrganisationTypes");
                 });
 
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.OrganisationPartnershipFinanceSchemeType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Excerpt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("LanguageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("SystemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("OrganisationPartnershipFinanceSchemeTypes");
+                });
+
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Platform.PlatformAppVersion", b =>
                 {
                     b.Property<long>("Id")
@@ -1233,11 +1697,20 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<long?>("LanguageId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Order")
                         .HasColumnType("int");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
 
                     b.Property<string>("SystemName")
                         .IsRequired()
@@ -1248,6 +1721,10 @@ namespace HenwoniDataModifierAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("ParentId");
 
                     b.ToTable("PlatformSubscriptionPlans");
                 });
@@ -1341,6 +1818,44 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.ToTable("Currencies");
                 });
 
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Project.ProjectFundMeListingCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Excerpt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("SystemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("ProjectFundMeListingCategories");
+                });
+
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Project.ProjectType", b =>
                 {
                     b.Property<long>("Id")
@@ -1391,6 +1906,9 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.Property<string>("Excerpt")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("HowToHire")
+                        .HasColumnType("text");
+
                     b.Property<long>("LanguageId")
                         .HasColumnType("bigint");
 
@@ -1430,6 +1948,9 @@ namespace HenwoniDataModifierAPI.Migrations
 
                     b.Property<string>("Excerpt")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HowToHire")
+                        .HasColumnType("text");
 
                     b.Property<long>("LanguageId")
                         .HasColumnType("bigint");
@@ -1875,6 +2396,44 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.ToTable("ServiceTemplateEntertainmentTypes");
                 });
 
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.SiteMeta", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("LanguageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("SystemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("SiteMeta");
+                });
+
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Skills.CandidateSkill", b =>
                 {
                     b.Property<int>("Id")
@@ -2218,13 +2777,104 @@ namespace HenwoniDataModifierAPI.Migrations
 
             modelBuilder.Entity("HenwoniDataModifierAPI.Common.Models.RefCommonJobTitleBenefit", b =>
                 {
+                    b.HasOne("HenwoniDataModifierAPI.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
+                    b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId");
+
+                    b.HasOne("HenwoniDataModifierAPI.Common.Models.RefCommonJobTitleBenefit", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
                     b.HasOne("HenwoniDataModifierAPI.Models.Common.RefCommonJobTitle", null)
                         .WithMany("Benefits")
                         .HasForeignKey("RefCommonJobTitleId");
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Language");
+
+                    b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Common.RefCJTDTemplateIntro", b =>
+                {
+                    b.HasOne("HenwoniDataModifierAPI.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
+                    b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId");
+
+                    b.HasOne("HenwoniDataModifierAPI.Models.Common.RefCJTDescriptionTemplate", "RefCJTDescriptionTemplate")
+                        .WithMany("Intros")
+                        .HasForeignKey("RefCJTDescriptionTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Language");
+
+                    b.Navigation("RefCJTDescriptionTemplate");
+                });
+
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Common.RefCJTDTemplateResponsibility", b =>
+                {
+                    b.HasOne("HenwoniDataModifierAPI.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
+                    b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId");
+
+                    b.HasOne("HenwoniDataModifierAPI.Models.Common.RefCJTDescriptionTemplate", "RefCJTDescriptionTemplate")
+                        .WithMany("Responsibilities")
+                        .HasForeignKey("RefCJTDescriptionTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Language");
+
+                    b.Navigation("RefCJTDescriptionTemplate");
+                });
+
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Common.RefCJTDTemplateSkillExperience", b =>
+                {
+                    b.HasOne("HenwoniDataModifierAPI.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
+                    b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId");
+
+                    b.HasOne("HenwoniDataModifierAPI.Models.Common.RefCJTDescriptionTemplate", "RefCJTDescriptionTemplate")
+                        .WithMany("SkillsExperiences")
+                        .HasForeignKey("RefCJTDescriptionTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Language");
+
+                    b.Navigation("RefCJTDescriptionTemplate");
                 });
 
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Common.RefCJTDescriptionTemplate", b =>
                 {
+                    b.HasOne("HenwoniDataModifierAPI.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
                     b.HasOne("HenwoniDataModifierAPI.Models.Employment.JobLevel", "JobLevel")
                         .WithMany()
                         .HasForeignKey("JobLevelId");
@@ -2243,6 +2893,8 @@ namespace HenwoniDataModifierAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Author");
+
                     b.Navigation("JobLevel");
 
                     b.Navigation("Language");
@@ -2252,6 +2904,10 @@ namespace HenwoniDataModifierAPI.Migrations
 
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Common.RefCJTDescriptionTemplateAlias", b =>
                 {
+                    b.HasOne("HenwoniDataModifierAPI.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
                     b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
                         .WithMany()
                         .HasForeignKey("LanguageId");
@@ -2260,29 +2916,53 @@ namespace HenwoniDataModifierAPI.Migrations
                         .WithMany("Aliases")
                         .HasForeignKey("RefCJTDescriptionTemplateId");
 
+                    b.Navigation("Author");
+
                     b.Navigation("Language");
                 });
 
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Common.RefCJTDescriptionTemplateTag", b =>
                 {
+                    b.HasOne("HenwoniDataModifierAPI.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
                     b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
                         .WithMany()
                         .HasForeignKey("LanguageId");
+
+                    b.Navigation("Author");
 
                     b.Navigation("Language");
                 });
 
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Common.RefCommonJobTitle", b =>
                 {
+                    b.HasOne("HenwoniDataModifierAPI.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
                     b.HasOne("HenwoniDataModifierAPI.Models.Employment.JobLevel", "JobLevel")
                         .WithMany()
                         .HasForeignKey("JobLevelId");
 
+                    b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId");
+
+                    b.Navigation("Author");
+
                     b.Navigation("JobLevel");
+
+                    b.Navigation("Language");
                 });
 
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Common.RefCommonJobTitleSalary", b =>
                 {
+                    b.HasOne("HenwoniDataModifierAPI.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
                     b.HasOne("HenwoniDataModifierAPI.Models.Location.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId");
@@ -2309,6 +2989,8 @@ namespace HenwoniDataModifierAPI.Migrations
                         .WithMany()
                         .HasForeignKey("StateId");
 
+                    b.Navigation("Author");
+
                     b.Navigation("City");
 
                     b.Navigation("Country");
@@ -2322,7 +3004,7 @@ namespace HenwoniDataModifierAPI.Migrations
 
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Employment.JobContract", b =>
                 {
-                    b.HasOne("HenwoniDataModifierAPI.Models.Employment.JobContractType", "JobContractType")
+                    b.HasOne("HenwoniDataModifierAPI.Models.Employment.JobLayoutType", "JobContractType")
                         .WithMany()
                         .HasForeignKey("JobContractTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2331,8 +3013,27 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.Navigation("JobContractType");
                 });
 
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Employment.JobFinanceSchemeType", b =>
+                {
+                    b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Language");
+                });
+
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Employment.JobIndustry", b =>
                 {
+                    b.HasOne("HenwoniDataModifierAPI.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
+                    b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId");
+
                     b.HasOne("HenwoniDataModifierAPI.Models.Employment.JobIndustry", "Parent")
                         .WithMany()
                         .HasForeignKey("ParentId");
@@ -2344,6 +3045,40 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.HasOne("HenwoniDataModifierAPI.Models.Common.RefCommonJobTitle", null)
                         .WithMany("JobIndustries")
                         .HasForeignKey("RefCommonJobTitleId");
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Language");
+
+                    b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Employment.JobLayoutType", b =>
+                {
+                    b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId");
+
+                    b.HasOne("HenwoniDataModifierAPI.Models.Employment.JobLayoutType", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Language");
+
+                    b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Employment.JobLevel", b =>
+                {
+                    b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId");
+
+                    b.HasOne("HenwoniDataModifierAPI.Models.Employment.JobLevel", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Language");
 
                     b.Navigation("Parent");
                 });
@@ -2439,7 +3174,7 @@ namespace HenwoniDataModifierAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
-                        .WithMany()
+                        .WithMany("Countries")
                         .HasForeignKey("LanguageId");
 
                     b.Navigation("Continent");
@@ -2533,6 +3268,64 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.Navigation("State");
                 });
 
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Location.Translation", b =>
+                {
+                    b.HasOne("HenwoniDataModifierAPI.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
+                    b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Language");
+                });
+
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Networks.MyNetworkCategory", b =>
+                {
+                    b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId");
+
+                    b.HasOne("HenwoniDataModifierAPI.Models.Networks.MyNetworkCategory", "Parent")
+                        .WithMany("SubCategories")
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Language");
+
+                    b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.OrganisationPartnershipFinanceSchemeType", b =>
+                {
+                    b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Language");
+                });
+
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Platform.PlatformSubscriptionPlan", b =>
+                {
+                    b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId");
+
+                    b.HasOne("HenwoniDataModifierAPI.Models.Platform.PlatformSubscriptionPlan", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Language");
+
+                    b.Navigation("Parent");
+                });
+
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Platform.PlatformSubscriptionPlanPrice", b =>
                 {
                     b.HasOne("HenwoniDataModifierAPI.Models.Pricing.Currency", "Currency")
@@ -2550,6 +3343,15 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.Navigation("Currency");
 
                     b.Navigation("Plan");
+                });
+
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Project.ProjectFundMeListingCategory", b =>
+                {
+                    b.HasOne("HenwoniDataModifierAPI.Models.Project.ProjectFundMeListingCategory", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Services.Common.RefCServiceTitle", b =>
@@ -2636,6 +3438,17 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.Navigation("EntertainmentType");
                 });
 
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.SiteMeta", b =>
+                {
+                    b.HasOne("HenwoniDataModifierAPI.Models.Location.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Language");
+                });
+
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Skills.CandidateSkill", b =>
                 {
                     b.HasOne("HenwoniDataModifierAPI.Models.Employment.JobIndustry", "PrimaryJobIndustry")
@@ -2683,7 +3496,7 @@ namespace HenwoniDataModifierAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("HenwoniDataModifierAPI.ApplicationUser", null)
+                    b.HasOne("HenwoniDataModifierAPI.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2692,7 +3505,7 @@ namespace HenwoniDataModifierAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("HenwoniDataModifierAPI.ApplicationUser", null)
+                    b.HasOne("HenwoniDataModifierAPI.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2707,7 +3520,7 @@ namespace HenwoniDataModifierAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HenwoniDataModifierAPI.ApplicationUser", null)
+                    b.HasOne("HenwoniDataModifierAPI.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2716,7 +3529,7 @@ namespace HenwoniDataModifierAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("HenwoniDataModifierAPI.ApplicationUser", null)
+                    b.HasOne("HenwoniDataModifierAPI.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2771,6 +3584,12 @@ namespace HenwoniDataModifierAPI.Migrations
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Common.RefCJTDescriptionTemplate", b =>
                 {
                     b.Navigation("Aliases");
+
+                    b.Navigation("Intros");
+
+                    b.Navigation("Responsibilities");
+
+                    b.Navigation("SkillsExperiences");
                 });
 
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Common.RefCommonJobTitle", b =>
@@ -2805,9 +3624,19 @@ namespace HenwoniDataModifierAPI.Migrations
                     b.Navigation("Translations");
                 });
 
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Location.Language", b =>
+                {
+                    b.Navigation("Countries");
+                });
+
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Location.State", b =>
                 {
                     b.Navigation("Cities");
+                });
+
+            modelBuilder.Entity("HenwoniDataModifierAPI.Models.Networks.MyNetworkCategory", b =>
+                {
+                    b.Navigation("SubCategories");
                 });
 
             modelBuilder.Entity("HenwoniDataModifierAPI.Models.Platform.PlatformSubscriptionPlan", b =>

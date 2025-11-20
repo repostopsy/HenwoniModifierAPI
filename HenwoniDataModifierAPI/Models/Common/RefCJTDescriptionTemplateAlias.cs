@@ -10,6 +10,9 @@ namespace HenwoniDataModifierAPI.Models.Common
         public string Title { get; set; }
         public string SystemName { get; set; }
         public string? Excerpt { get; set; }
+        public virtual ApplicationUser? Author { get; set; }
+        public bool Approved { get; set; }
+        public double Rating { get; set; }
         public virtual RefCJTDescriptionTemplate RefCJTDescriptionTemplate { get; }
     }
 }

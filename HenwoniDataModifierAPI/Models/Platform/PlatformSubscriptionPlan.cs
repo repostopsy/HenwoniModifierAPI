@@ -1,4 +1,5 @@
-﻿using HenwoniDataModifierAPI.Models.Location;
+﻿using HenwoniDataModifierAPI.Models.Employment;
+using HenwoniDataModifierAPI.Models.Location;
 using HenwoniDataModifierAPI.Models.Skills;
 
 
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace HenwoniDataModifierAPI.Models.Platform
@@ -19,7 +21,7 @@ namespace HenwoniDataModifierAPI.Models.Platform
 		}
 		public long Id { get; set; }
 		public string Title { get; set; }
-		public bool Active { get; set; } = false;
+        public bool Active { get; set; } = false;
 		public int? Order { get; set; }
         public string SystemName { get; set; }
 		public string Excerpt { get; set; }
@@ -27,6 +29,10 @@ namespace HenwoniDataModifierAPI.Models.Platform
 		public string? Notes { get; set; }
         public virtual  ICollection<PlatformSubscriptionPlanFeature> Features { get; set; }
 		public virtual ICollection<PlatformSubscriptionPlanPrice> Pricing { get; set; }
-		public bool IsDeleted { get; set; } = false;
+        [JsonIgnore]
+        public virtual Language? Language { get; set; }
+        public virtual PlatformSubscriptionPlan? Parent { get; set; }
+        public double Rating { get; set; }
+        public bool IsDeleted { get; set; } = false;
 	}
 }

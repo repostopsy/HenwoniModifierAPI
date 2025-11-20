@@ -12,7 +12,7 @@ namespace HenwoniDataModifierAPI.Models.Employment
         public DateTime StartDate { get; set; } // Seconds
         public DateTime EndDate { get; set; } // Seconds
         public bool ContractCompleted { get; set; }
-		public virtual JobContractType JobContractType { get; set; }
+		public virtual JobLayoutType JobContractType { get; set; }
         public bool IsDeleted { get; set; } = false;
 
     }

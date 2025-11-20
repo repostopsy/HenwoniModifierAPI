@@ -15,15 +15,28 @@ namespace HenwoniDataModifierAPI.Models.Common
 		public String SystemName { get; set; }
 		public String Title { get; set; }
 		public String? Excerpt { get; set; }
-		public String Template { get; set; }
-		public String Notes { get; set; }
+        [Column(TypeName = "text")]
+        public String Template { get; set; }
+        [Column(TypeName = "text")]
+        public String? Notes { get; set; }
 
         [JsonIgnore]
         public virtual RefCommonJobTitle RefCommonJobTitle { get; set; }
         public virtual JobLevel? JobLevel { get; set; }
         public virtual Language? Language { get; set; }
+        public virtual ApplicationUser? Author { get; set; }
+        public bool Approved { get; set; }
+        public double Rating { get; set; }
+        /// <summary>
+        /// If is original ParentId is null
+        /// </summary>
         public long? ParentId { get; set; }
         public virtual ICollection<RefCJTDescriptionTemplateTag> Tags { get; }
         public virtual ICollection<RefCJTDescriptionTemplateAlias> Aliases { get; }
+        public virtual ICollection<RefCJTDTemplateResponsibility> Responsibilities { get; set; }
+        public virtual ICollection<RefCJTDTemplateSkillExperience> SkillsExperiences { get; set; }
+        public virtual ICollection<RefCJTDTemplateIntro> Intros { get; set; }
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+        public DateTime DateUpdated { get; set; }
     }
 }

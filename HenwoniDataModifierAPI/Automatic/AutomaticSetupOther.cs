@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Reflection;
+using System.Reflection.Metadata;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
+using DotLiquid.Tags;
 using HenwoniDataModifierAPI.Data;
+using HenwoniDataModifierAPI.Models;
 using HenwoniDataModifierAPI.Models.Candidate;
 using HenwoniDataModifierAPI.Models.Employment;
 using HenwoniDataModifierAPI.Models.HelpSupport;
@@ -12,7 +17,11 @@ using HenwoniDataModifierAPI.Models.Pricing;
 using HenwoniDataModifierAPI.Models.Project;
 using HenwoniDataModifierAPI.Models.Services;
 using HenwoniDataModifierAPI.Models.Services.Genre;
+using HenwoniDataModifierAPI.Utilities;
+using Humanizer;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HenwoniDataModifierAPI.Automatic
 {
@@ -20,6 +29,9 @@ namespace HenwoniDataModifierAPI.Automatic
     {
         public async Task SetupOtherEntitiesAsync(ApplicationDbContext dbContext)
         {
+            await JobFinanceSchemeTypeSetupAsync(dbContext);
+            await OrganisationPartnershipFinanceSchemeTypesSetupAsync(dbContext);
+            await SetupProjectFundMeListingCategoriesAsync(dbContext);
             await SetupAuditingRequirementsAsync(dbContext);
             await SetupCurrenciesAsync(dbContext);
             await SetupCandidateProfileStyleAsync(dbContext);
@@ -172,6 +184,38 @@ namespace HenwoniDataModifierAPI.Automatic
             await dbContext.SaveChangesAsync();
         }
 
+        public static async Task JobFinanceSchemeTypeSetupAsync(ApplicationDbContext dbContext)
+        {
+            var l = await dbContext.Languages.Where(x => x.SystemName == Constants.DefaultLanguage).FirstOrDefaultAsync();
+            var a = new JobFinanceSchemeType { Language=l, Title = JobFinanceSchemeType.SalaryWageCompensationName, Excerpt = "", SystemName = JobFinanceSchemeType.SalaryWageCompensationName };
+            var b = new JobFinanceSchemeType { Language = l, Title = JobFinanceSchemeType.GeneralPartnershipName, Excerpt = "Employees become legal partners, sharing profits and liabilities. This requires a lot of personal liability.", SystemName = JobFinanceSchemeType.GeneralPartnershipName };
+            var c = new JobFinanceSchemeType { Language = l, Title = JobFinanceSchemeType.LimitedPartnershipName, Excerpt = "Employees receive a percentage of profits without formal ownership. (Does not provide legal ownership in company)", SystemName = JobFinanceSchemeType.LimitedPartnershipName };
+            var d = new JobFinanceSchemeType { Language = l, Title = JobFinanceSchemeType.ProfitSharingPartnershipName, Excerpt = "Employees receive a percentage of profits without formal ownership. (Does not provide legal ownership in company)", SystemName = JobFinanceSchemeType.ProfitSharingPartnershipName };
+            var e = new JobFinanceSchemeType { Language = l, Title = JobFinanceSchemeType.EmployeeStockOwnershipName, Excerpt = "This gives employees a ownership stake in the company.)", SystemName = JobFinanceSchemeType.EmployeeStockOwnershipName };
+
+            if (!await dbContext.JobFinanceSchemeTypes.AnyAsync(x=>x.SystemName== JobFinanceSchemeType.SalaryWageCompensationName)) dbContext.JobFinanceSchemeTypes.AddAsync(a);
+            if (!await dbContext.JobFinanceSchemeTypes.AnyAsync(x => x.SystemName == JobFinanceSchemeType.GeneralPartnershipName)) dbContext.JobFinanceSchemeTypes.AddAsync(b);
+            if (!await dbContext.JobFinanceSchemeTypes.AnyAsync(x => x.SystemName == JobFinanceSchemeType.LimitedPartnershipName)) dbContext.JobFinanceSchemeTypes.AddAsync(c);
+            if (!await dbContext.JobFinanceSchemeTypes.AnyAsync(x => x.SystemName == JobFinanceSchemeType.ProfitSharingPartnershipName)) dbContext.JobFinanceSchemeTypes.AddAsync(d);
+            if (!await dbContext.JobFinanceSchemeTypes.AnyAsync(x => x.SystemName == JobFinanceSchemeType.EmployeeStockOwnershipName)) dbContext.JobFinanceSchemeTypes.AddAsync(e);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public static async Task OrganisationPartnershipFinanceSchemeTypesSetupAsync(ApplicationDbContext dbContext)
+        {
+            var l = await dbContext.Languages.Where(x => x.SystemName == Constants.DefaultLanguage).FirstOrDefaultAsync();
+            var b = new OrganisationPartnershipFinanceSchemeType { Language = l, Title = OrganisationPartnershipFinanceSchemeType.GeneralPartnershipName, Excerpt = "Employees become legal partners, sharing profits and liabilities. This requires a lot of personal liability.", SystemName = OrganisationPartnershipFinanceSchemeType.GeneralPartnershipName };
+            var c = new OrganisationPartnershipFinanceSchemeType { Language = l, Title = OrganisationPartnershipFinanceSchemeType.LimitedPartnershipName, Excerpt = "Employees receive a percentage of profits without formal ownership. (Does not provide legal ownership in company)", SystemName = OrganisationPartnershipFinanceSchemeType.LimitedPartnershipName };
+            var d = new OrganisationPartnershipFinanceSchemeType { Language = l, Title = OrganisationPartnershipFinanceSchemeType.ProfitSharingPartnershipName, Excerpt = "Employees receive a percentage of profits without formal ownership. (Does not provide legal ownership in company)", SystemName = OrganisationPartnershipFinanceSchemeType.ProfitSharingPartnershipName };
+            var e = new OrganisationPartnershipFinanceSchemeType { Language = l, Title = OrganisationPartnershipFinanceSchemeType.EmployeeStockOwnershipName, Excerpt = "This gives employees a ownership stake in the company.)", SystemName = OrganisationPartnershipFinanceSchemeType.EmployeeStockOwnershipName };
+
+            dbContext.OrganisationPartnershipFinanceSchemeTypes.AddAsync(b);
+            dbContext.OrganisationPartnershipFinanceSchemeTypes.AddAsync(c);
+            dbContext.OrganisationPartnershipFinanceSchemeTypes.AddAsync(d);
+            dbContext.OrganisationPartnershipFinanceSchemeTypes.AddAsync(e);
+
+            await dbContext.SaveChangesAsync();
+        }
         public static async Task ServiceTagAsync(ApplicationDbContext dbContext)
         {
             ServiceTag c1 = await dbContext.ServiceTags.Where(x => x.SystemName == "collabration-project").FirstOrDefaultAsync();
@@ -480,58 +524,58 @@ namespace HenwoniDataModifierAPI.Automatic
         }
         public static async Task JobContractTypeAsync(ApplicationDbContext dbContext)
         {
-            JobContractType c1 = await dbContext.JobContractTypes.Where(x => x.SystemName == "full-time").FirstOrDefaultAsync();
+            JobLayoutType c1 = await dbContext.JobLayoutTypes.Where(x => x.SystemName == "full-time").FirstOrDefaultAsync();
             if (c1 == null)
             {
-                c1 = new JobContractType { SystemName = "full-time", Title = "Full Time", Description = "" };
-                dbContext.JobContractTypes.Add(c1);
+                c1 = new JobLayoutType { SystemName = "full-time", Title = "Full Time", Description = "" };
+                dbContext.JobLayoutTypes.Add(c1);
             }
-            JobContractType c2 = await dbContext.JobContractTypes.Where(x => x.SystemName == "permanent").FirstOrDefaultAsync();
+            JobLayoutType c2 = await dbContext.JobLayoutTypes.Where(x => x.SystemName == "permanent").FirstOrDefaultAsync();
             if (c2 == null)
             {
-                c2 = new JobContractType { SystemName = "permanent", Title = "Permanent", Description = "" };
-                dbContext.JobContractTypes.Add(c2);
+                c2 = new JobLayoutType { SystemName = "permanent", Title = "Permanent", Description = "" };
+                dbContext.JobLayoutTypes.Add(c2);
             }
-            JobContractType c3 = await dbContext.JobContractTypes.Where(x => x.SystemName == "part-time").FirstOrDefaultAsync();
+            JobLayoutType c3 = await dbContext.JobLayoutTypes.Where(x => x.SystemName == "part-time").FirstOrDefaultAsync();
             if (c3 == null)
             {
-                c3 = new JobContractType { SystemName = "part-time", Title = "Part Time", Description = "" };
-                dbContext.JobContractTypes.Add(c3);
+                c3 = new JobLayoutType { SystemName = "part-time", Title = "Part Time", Description = "" };
+                dbContext.JobLayoutTypes.Add(c3);
             }
 
-            JobContractType c4 = await dbContext.JobContractTypes.Where(x => x.SystemName == "temporary").FirstOrDefaultAsync();
+            JobLayoutType c4 = await dbContext.JobLayoutTypes.Where(x => x.SystemName == "temporary").FirstOrDefaultAsync();
             if (c4 == null)
             {
-                c4 = new JobContractType { SystemName = "temporary", Title = "Temporary", Description = "" };
-                dbContext.JobContractTypes.Add(c4);
+                c4 = new JobLayoutType { SystemName = "temporary", Title = "Temporary", Description = "" };
+                dbContext.JobLayoutTypes.Add(c4);
             }
 
-            JobContractType c5 = await dbContext.JobContractTypes.Where(x => x.SystemName == "fixed-contract").FirstOrDefaultAsync();
+            JobLayoutType c5 = await dbContext.JobLayoutTypes.Where(x => x.SystemName == "fixed-term").FirstOrDefaultAsync();
             if (c5 == null)
             {
-                c5 = new JobContractType { SystemName = "fixed-contract", Title = "Fixed Contract", Description = "" };
-                dbContext.JobContractTypes.Add(c5);
+                c5 = new JobLayoutType { SystemName = "fixed-term", Title = "Fixed Term", Description = "" };
+                dbContext.JobLayoutTypes.Add(c5);
             }
 
-            JobContractType c6 = await dbContext.JobContractTypes.Where(x => x.SystemName == "volunteer").FirstOrDefaultAsync();
+            JobLayoutType c6 = await dbContext.JobLayoutTypes.Where(x => x.SystemName == "volunteer").FirstOrDefaultAsync();
             if (c6 == null)
             {
-                c6 = new JobContractType { SystemName = "volunteer", Title = "Volunteer", Description = "" };
-                dbContext.JobContractTypes.Add(c6);
+                c6 = new JobLayoutType { SystemName = "volunteer", Title = "Volunteer", Description = "" };
+                dbContext.JobLayoutTypes.Add(c6);
             }
 
-            JobContractType c7 = await dbContext.JobContractTypes.Where(x => x.SystemName == "apprenticeship").FirstOrDefaultAsync();
+            JobLayoutType c7 = await dbContext.JobLayoutTypes.Where(x => x.SystemName == "apprenticeship").FirstOrDefaultAsync();
             if (c7 == null)
             {
-                c7 = new JobContractType { SystemName = "apprenticeship", Title = "Apprenticeship", Description = "" };
-                dbContext.JobContractTypes.Add(c7);
+                c7 = new JobLayoutType { SystemName = "apprenticeship", Title = "Apprenticeship", Description = "" };
+                dbContext.JobLayoutTypes.Add(c7);
             }
 
-            JobContractType c8 = await dbContext.JobContractTypes.Where(x => x.SystemName == "internship").FirstOrDefaultAsync();
+            JobLayoutType c8 = await dbContext.JobLayoutTypes.Where(x => x.SystemName == "internship").FirstOrDefaultAsync();
             if (c8 == null)
             {
-                c8 = new JobContractType { SystemName = "internship", Title = "Internship", Description = "" };
-                dbContext.JobContractTypes.Add(c8);
+                c8 = new JobLayoutType { SystemName = "internship", Title = "Internship", Description = "" };
+                dbContext.JobLayoutTypes.Add(c8);
             }
             await dbContext.SaveChangesAsync();
         }
@@ -887,6 +931,400 @@ namespace HenwoniDataModifierAPI.Automatic
                 y10 = new EntertainmentGenre { Title = "Thriller", SystemName = "thriller", Excerpt = "Thriller genre" };
                 dbContext.EntertainmentGenres.Add(y10);
             }
+            await dbContext.SaveChangesAsync();
+        }
+
+        public static async Task SetupProjectFundMeListingCategoriesAsync(ApplicationDbContext dbContext)
+        {
+            ProjectFundMeListingCategory y1 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "art").FirstOrDefaultAsync();
+            if (y1 == null)
+            {
+                y1 = new ProjectFundMeListingCategory { Title = "Art", SystemName = "art", Excerpt = "Art" };
+                dbContext.ProjectFundMeListingCategories.Add(y1);
+            }
+            ProjectFundMeListingCategory y2 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "ceramics").FirstOrDefaultAsync();
+            if (y2 == null)
+            {
+                y2 = new ProjectFundMeListingCategory { Parent = y1, Title = "Ceramics", SystemName = "ceramics", Excerpt = "Ceramics" };
+                dbContext.ProjectFundMeListingCategories.Add(y2);
+            }
+            ProjectFundMeListingCategory y3 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "conceptual-art").FirstOrDefaultAsync();
+            if (y3 == null)
+            {
+                y3 = new ProjectFundMeListingCategory { Parent = y1, Title = "Conceptual Art", SystemName = "conceptual-art", Excerpt = "Conceptual Art" };
+                dbContext.ProjectFundMeListingCategories.Add(y3);
+            }
+            ProjectFundMeListingCategory y4 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "digital-art").FirstOrDefaultAsync();
+            if (y4 == null)
+            {
+                y4 = new ProjectFundMeListingCategory { Parent = y1, Title = "Digital Art", SystemName = "digital-art", Excerpt = "Digital Art" };
+                dbContext.ProjectFundMeListingCategories.Add(y4);
+            }
+            ProjectFundMeListingCategory y5 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "illustration").FirstOrDefaultAsync();
+            if (y5 == null)
+            {
+                y5 = new ProjectFundMeListingCategory { Parent = y1, Title = "Illustration", SystemName = "illustration", Excerpt = "Illustration" };
+                dbContext.ProjectFundMeListingCategories.Add(y5);
+            }
+            ProjectFundMeListingCategory y6 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "installations").FirstOrDefaultAsync();
+            if (y6 == null)
+            {
+                y6 = new ProjectFundMeListingCategory { Parent = y1, Title = "Installations", SystemName = "installations", Excerpt = "Installations" };
+                dbContext.ProjectFundMeListingCategories.Add(y6);
+            }
+            ProjectFundMeListingCategory y7 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "mixed-media").FirstOrDefaultAsync();
+            if (y7 == null)
+            {
+                y7 = new ProjectFundMeListingCategory { Parent = y1, Title = "Mixed Media", SystemName = "mixed-media", Excerpt = "Mixed Media" };
+                dbContext.ProjectFundMeListingCategories.Add(y7);
+            }
+            ProjectFundMeListingCategory y8 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "painting").FirstOrDefaultAsync();
+            if (y8 == null)
+            {
+                y8 = new ProjectFundMeListingCategory { Parent = y1, Title = "Painting", SystemName = "painting", Excerpt = "Painting" };
+                dbContext.ProjectFundMeListingCategories.Add(y8);
+            }
+            ProjectFundMeListingCategory y9 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "performance-art").FirstOrDefaultAsync();
+            if (y9 == null)
+            {
+                y9 = new ProjectFundMeListingCategory { Parent = y1, Title = "Performance Art", SystemName = "performance-art", Excerpt = "Performance Art" };
+                dbContext.ProjectFundMeListingCategories.Add(y9);
+            }
+            ProjectFundMeListingCategory y10 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "public-art").FirstOrDefaultAsync();
+            if (y10 == null)
+            {
+                y10 = new ProjectFundMeListingCategory { Parent = y1, Title = "Public Art", SystemName = "public-art", Excerpt = "Public Art" };
+                dbContext.ProjectFundMeListingCategories.Add(y10);
+            }
+            ProjectFundMeListingCategory y11 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "sculpture").FirstOrDefaultAsync();
+            if (y11 == null)
+            {
+                y11 = new ProjectFundMeListingCategory { Parent = y1, Title = "Sculpture", SystemName = "sculpture", Excerpt = "Sculpture" };
+                dbContext.ProjectFundMeListingCategories.Add(y11);
+            }
+            ProjectFundMeListingCategory y12 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "social-practice").FirstOrDefaultAsync();
+            if (y12 == null)
+            {
+                y12 = new ProjectFundMeListingCategory { Parent = y1, Title = "Social Practice", SystemName = "social-practice", Excerpt = "Social Practice" };
+                dbContext.ProjectFundMeListingCategories.Add(y12);
+            }
+            ProjectFundMeListingCategory y13 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "textiles").FirstOrDefaultAsync();
+            if (y13 == null)
+            {
+                y13 = new ProjectFundMeListingCategory { Parent = y1, Title = "Textiles", SystemName = "textiles", Excerpt = "Textiles" };
+                dbContext.ProjectFundMeListingCategories.Add(y13);
+            }
+            ProjectFundMeListingCategory y14 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "video-art").FirstOrDefaultAsync();
+            if (y14 == null)
+            {
+                y14 = new ProjectFundMeListingCategory { Parent = y1, Title = "Video Art", SystemName = "video-art", Excerpt = "Video Art" };
+                dbContext.ProjectFundMeListingCategories.Add(y14);
+            }
+
+
+
+            ProjectFundMeListingCategory y15 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "comics").FirstOrDefaultAsync();
+            if (y15 == null)
+            {
+                y15 = new ProjectFundMeListingCategory { Title = "Comics", SystemName = "comics", Excerpt = "Comics" };
+                dbContext.ProjectFundMeListingCategories.Add(y15);
+            }
+            ProjectFundMeListingCategory y16 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "anthologies").FirstOrDefaultAsync();
+            if (y16 == null)
+            {
+                y16 = new ProjectFundMeListingCategory { Parent = y15, Title = "Anthologies", SystemName = "anthologies", Excerpt = "Anthologies" };
+                dbContext.ProjectFundMeListingCategories.Add(y16);
+            }
+            ProjectFundMeListingCategory y17 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "comic-books").FirstOrDefaultAsync();
+            if (y17 == null)
+            {
+                y17 = new ProjectFundMeListingCategory { Parent = y15, Title = "Comic Books", SystemName = "comic-books", Excerpt = "Comic Books" };
+                dbContext.ProjectFundMeListingCategories.Add(y17);
+            }
+            ProjectFundMeListingCategory y18 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "events").FirstOrDefaultAsync();
+            if (y18 == null)
+            {
+                y18 = new ProjectFundMeListingCategory { Parent = y15, Title = "Events", SystemName = "events", Excerpt = "Events" };
+                dbContext.ProjectFundMeListingCategories.Add(y18);
+            }
+            ProjectFundMeListingCategory y19 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "graphic-novels").FirstOrDefaultAsync();
+            if (y19 == null)
+            {
+                y19 = new ProjectFundMeListingCategory { Parent = y15, Title = "Graphic Novels", SystemName = "graphic-novels", Excerpt = "Graphic Novels" };
+                dbContext.ProjectFundMeListingCategories.Add(y19);
+            }
+            ProjectFundMeListingCategory y20 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "webcomics").FirstOrDefaultAsync();
+            if (y20 == null)
+            {
+                y20 = new ProjectFundMeListingCategory { Parent = y15, Title = "Webcomics", SystemName = "webcomics", Excerpt = "Webcomics" };
+                dbContext.ProjectFundMeListingCategories.Add(y20);
+            }
+
+
+
+            ProjectFundMeListingCategory p3 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "crafts").FirstOrDefaultAsync();
+            if (p3 == null)
+            {
+                p3 = new ProjectFundMeListingCategory { Title = "Crafts", SystemName = "crafts", Excerpt = "Crafts" };
+                dbContext.ProjectFundMeListingCategories.Add(p3);
+            }
+            List<string> ee = new List<string>() { "Candles", "Crochet", "DIY", "Embroidery", "Glass", "Knitting", "Pottery", "Printing", "Quilts", "Stationery", "Weaving", "Woodworking" };
+            foreach (string x in ee)
+            {
+                // Replace multiple spaces
+                string str = Regex.Replace(x, @"\s+", " ").Trim();
+                str = Regex.Replace(str, " ", "-").Trim();
+                string systemName = str.GenerateSlug();
+                ProjectFundMeListingCategory eee = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == systemName).FirstOrDefaultAsync();
+                if (eee == null)
+                {
+                    eee = new ProjectFundMeListingCategory { Parent= p3, Title = x, SystemName = systemName, Excerpt = x };
+                    dbContext.ProjectFundMeListingCategories.Add(eee);
+                }
+            }
+
+
+
+            ProjectFundMeListingCategory p4 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "dance").FirstOrDefaultAsync();
+            if (p4 == null)
+            {
+                p4 = new ProjectFundMeListingCategory { Title = "Dance", SystemName = "dance", Excerpt = "Dance" };
+                dbContext.ProjectFundMeListingCategories.Add(p4);
+            }
+            List<string> ee2 = new List<string>() { "Performances", "Spaces", "Workshops" };
+            foreach (string x in ee2)
+            {
+                string systemName = x.GenerateSlug();
+                ProjectFundMeListingCategory eee = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == systemName).FirstOrDefaultAsync();
+                if (eee == null)
+                {
+                    eee = new ProjectFundMeListingCategory { Parent = p4, Title = x, SystemName = systemName, Excerpt = x };
+                    dbContext.ProjectFundMeListingCategories.Add(eee);
+                }
+            }
+
+
+
+            ProjectFundMeListingCategory p5 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "design").FirstOrDefaultAsync();
+            if (p5 == null)
+            {
+                p5 = new ProjectFundMeListingCategory { Title = "Design", SystemName = "design", Excerpt = "Design" };
+                dbContext.ProjectFundMeListingCategories.Add(p5);
+            }
+            List<string> ee3 = new List<string>() {
+                "Architecture", "Civic Design", "Graphic Design", "Interactive Design", "Product Design", "Toys"
+            };
+            foreach (string x in ee3)
+            {
+                string systemName = x.GenerateSlug();
+                ProjectFundMeListingCategory eee = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == systemName).FirstOrDefaultAsync();
+                if (eee == null)
+                {
+                    eee = new ProjectFundMeListingCategory { Parent = p5, Title = x, SystemName = systemName, Excerpt = x };
+                    dbContext.ProjectFundMeListingCategories.Add(eee);
+                }
+            }
+
+
+
+            ProjectFundMeListingCategory p6 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "fashion").FirstOrDefaultAsync();
+            if (p6 == null)
+            {
+                p6 = new ProjectFundMeListingCategory { Title = "Fashion", SystemName = "fashion", Excerpt = "Fashion" };
+                dbContext.ProjectFundMeListingCategories.Add(p6);
+            }
+            List<string> ee4 = new List<string>() {
+                "Accessories", "Apparel", "Childrenswear", "Couture", "Footwear", "Jewelry", "Pet Fashion", "Ready-to-wear"
+            };
+            foreach (string x in ee4)
+            {
+                string systemName = x.GenerateSlug();
+                ProjectFundMeListingCategory eee = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == systemName).FirstOrDefaultAsync();
+                if (eee == null)
+                {
+                    eee = new ProjectFundMeListingCategory { Parent = p6, Title = x, SystemName = systemName, Excerpt = x };
+                    dbContext.ProjectFundMeListingCategories.Add(eee);
+                }
+            }
+
+
+
+            ProjectFundMeListingCategory p7 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "Film").FirstOrDefaultAsync();
+            if (p7 == null)
+            {
+                p7 = new ProjectFundMeListingCategory { Title = "Film", SystemName = "film", Excerpt = "Film" };
+                dbContext.ProjectFundMeListingCategories.Add(p7);
+            }
+            List<string> ee5 = new List<string>() {
+                "Action", "Animation", "Comedy", "Documentary", "Drama", "Experimental", "Family", "Fantasy", "Festivals", "Horror", "Movie Theaters", "Music Videos", "Narrative Film", "Romance", "Science Fiction", "Shorts", "Television", "Thrillers", "Webseries"
+            };
+            foreach (string x in ee5)
+            {
+                string systemName = x.GenerateSlug();
+                ProjectFundMeListingCategory eee = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == systemName).FirstOrDefaultAsync();
+                if (eee == null)
+                {
+                    eee = new ProjectFundMeListingCategory { Parent = p7, Title = x, SystemName = systemName, Excerpt = x };
+                    dbContext.ProjectFundMeListingCategories.Add(eee);
+                }
+            }
+
+
+
+            ProjectFundMeListingCategory p8 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "food").FirstOrDefaultAsync();
+            if (p8 == null)
+            {
+                p8 = new ProjectFundMeListingCategory { Title = "Food", SystemName = "food", Excerpt = "Food" };
+                dbContext.ProjectFundMeListingCategories.Add(p8);
+            }
+            List<string> ee6 = new List<string>() {
+                "Community Gardens","Cookbooks","Drinks","Events","Farmer's Markets","Farms","Food Trucks","Restaurants","Small Batch","Spaces","Vegan"
+            };
+            foreach (string x in ee6)
+            {
+                string systemName = x.GenerateSlug();
+                ProjectFundMeListingCategory eee = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == systemName).FirstOrDefaultAsync();
+                if (eee == null)
+                {
+                    eee = new ProjectFundMeListingCategory { Parent = p8, Title = x, SystemName = systemName, Excerpt = x };
+                    dbContext.ProjectFundMeListingCategories.Add(eee);
+                }
+            }
+
+
+
+            ProjectFundMeListingCategory p9 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "games").FirstOrDefaultAsync();
+            if (p9 == null)
+            {
+                p9 = new ProjectFundMeListingCategory { Title = "Games", SystemName = "games", Excerpt = "Games" };
+                dbContext.ProjectFundMeListingCategories.Add(p9);
+            }
+            List<string> ee7 = new List<string>() {
+                "Gaming Hardware","Live Games","Mobile Games","Playing Cards","Puzzles","Tabletop Games"
+            };
+            foreach (string x in ee7)
+            {
+                string systemName = x.GenerateSlug();
+                ProjectFundMeListingCategory eee = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == systemName).FirstOrDefaultAsync();
+                if (eee == null)
+                {
+                    eee = new ProjectFundMeListingCategory { Parent = p9, Title = x, SystemName = systemName, Excerpt = x };
+                    dbContext.ProjectFundMeListingCategories.Add(eee);
+                }
+            }
+
+
+
+            ProjectFundMeListingCategory p10 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "music").FirstOrDefaultAsync();
+            if (p10 == null)
+            {
+                p10 = new ProjectFundMeListingCategory { Title = "Music", SystemName = "music", Excerpt = "Music" };
+                dbContext.ProjectFundMeListingCategories.Add(p10);
+            }
+            List<string> ee8 = new List<string>() {
+                "Blues","Classical Music","Comedy","Country & Folk","Electronic Music","Faith","Hip-Hop","Indie Rock","Jazz","Kids","Latin","Metal","Pop","Punk","R&B","Rock","World Music"
+            };
+            foreach (string x in ee8)
+            {
+                string systemName = x.GenerateSlug();
+                ProjectFundMeListingCategory eee = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == systemName).FirstOrDefaultAsync();
+                if (eee == null)
+                {
+                    eee = new ProjectFundMeListingCategory { Parent = p10, Title = x, SystemName = systemName, Excerpt = x };
+                    dbContext.ProjectFundMeListingCategories.Add(eee);
+                }
+            }
+
+
+
+            ProjectFundMeListingCategory p11 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "photography").FirstOrDefaultAsync();
+            if (p11 == null)
+            {
+                p11 = new ProjectFundMeListingCategory { Title = "Photography", SystemName = "photography", Excerpt = "Photography" };
+                dbContext.ProjectFundMeListingCategories.Add(p11);
+            }
+            List<string> ee9 = new List<string>() {
+                "Animals","Fine Art","Nature","People","Photobooks","Places"
+            };
+            foreach (string x in ee9)
+            {
+                string systemName = x.GenerateSlug();
+                ProjectFundMeListingCategory eee = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == systemName).FirstOrDefaultAsync();
+                if (eee == null)
+                {
+                    eee = new ProjectFundMeListingCategory { Parent = p11, Title = x, SystemName = systemName, Excerpt = x };
+                    dbContext.ProjectFundMeListingCategories.Add(eee);
+                }
+            }
+
+
+
+            ProjectFundMeListingCategory p12 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "publishing").FirstOrDefaultAsync();
+            if (p12 == null)
+            {
+                p12 = new ProjectFundMeListingCategory { Title = "Publishing", SystemName = "publishing", Excerpt = "Publishing" };
+                dbContext.ProjectFundMeListingCategories.Add(p12);
+            }
+            List<string> ee10 = new List<string>() {
+                "Academic","Anthologies","Art Books","Calendars","Children's Books","Comedy","Fiction","Letterpress","Literary Journals","Literary Spaces","Nonfiction","Periodicals","Poetry","Radio & Podcasts","Translations","Young Adult","Zines"
+            };
+            foreach (string x in ee10)
+            {
+                string systemName = x.GenerateSlug();
+                ProjectFundMeListingCategory eee = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == systemName).FirstOrDefaultAsync();
+                if (eee == null)
+                {
+                    eee = new ProjectFundMeListingCategory { Parent = p12, Title = x, SystemName = systemName, Excerpt = x };
+                    dbContext.ProjectFundMeListingCategories.Add(eee);
+                }
+            }
+
+
+
+            ProjectFundMeListingCategory p13 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "technology").FirstOrDefaultAsync();
+            if (p13 == null)
+            {
+                p13 = new ProjectFundMeListingCategory { Title = "Technology", SystemName = "technology", Excerpt = "Technology" };
+                dbContext.ProjectFundMeListingCategories.Add(p13);
+            }
+            List<string> ee11 = new List<string>() {
+                "3D Printing","Apps","Camera Equipment","DIY Electronics","Fabrication Tools","Flight","Gadgets","Hardware","Makerspaces","Robots","Software","Sound","Space Exploration","Wearables","Web"
+            };
+            foreach (string x in ee11)
+            {
+                string systemName = x.GenerateSlug();
+                ProjectFundMeListingCategory eee = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == systemName).FirstOrDefaultAsync();
+                if (eee == null)
+                {
+                    eee = new ProjectFundMeListingCategory { Parent = p13, Title = x, SystemName = systemName, Excerpt = x };
+                    dbContext.ProjectFundMeListingCategories.Add(eee);
+                }
+            }
+
+
+
+            ProjectFundMeListingCategory p14 = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == "theater").FirstOrDefaultAsync();
+            if (p14 == null)
+            {
+                p14 = new ProjectFundMeListingCategory { Title = "Theater", SystemName = "theater", Excerpt = "Theater" };
+                dbContext.ProjectFundMeListingCategories.Add(p14);
+            }
+            List<string> ee12 = new List<string>() {
+                "Comedy","Experimental","Festivals","Immersive","Musical","Plays"
+            };
+            foreach (string x in ee12)
+            {
+                string systemName = x.GenerateSlug();
+                ProjectFundMeListingCategory eee = await dbContext.ProjectFundMeListingCategories.Where(x => x.SystemName == systemName).FirstOrDefaultAsync();
+                if (eee == null)
+                {
+                    eee = new ProjectFundMeListingCategory { Parent = p14, Title = x, SystemName = systemName, Excerpt = x };
+                    dbContext.ProjectFundMeListingCategories.Add(eee);
+                }
+            }
+
+
+
             await dbContext.SaveChangesAsync();
         }
 

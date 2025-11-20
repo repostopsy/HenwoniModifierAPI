@@ -9,6 +9,10 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using HenwoniDataModifierAPI.Models.Common;
 using HenwoniDataModifierAPI.Models.Services.Common;
+using HenwoniDataModifierAPI.Models;
+using System;
+using HenwoniDataModifierAPI.Models.Project;
+using HenwoniDataModifierAPI.Models.Networks;
 
 namespace HenwoniDataModifierAPI.Data
 {
@@ -18,10 +22,12 @@ namespace HenwoniDataModifierAPI.Data
             : base(options)
         {
         }
-
+        public DbSet<SiteMeta> SiteMeta { get; set; }
         public DbSet<SkillCategory> SkillCategories { get; set; }
         public DbSet<Models.HelpSupport.SupportTicketDepartment> SupportTicketDepartments { get; set; }
-        public DbSet<Models.Employment.JobContractType> JobContractTypes { get; set; }
+        public DbSet<Models.Employment.JobLayoutType> JobLayoutTypes { get; set; }
+        public DbSet<Models.Employment.JobFinanceSchemeType> JobFinanceSchemeTypes { get; set; }
+        public DbSet<OrganisationPartnershipFinanceSchemeType> OrganisationPartnershipFinanceSchemeTypes { get; set; }
         public DbSet<Models.Employment.JobIndustry> JobIndustries { get; set; }
         public DbSet<Models.Employment.JobContract> JobContracts { get; set; }
         public DbSet<Models.Common.RefCommonJobTitle> RefCommonJobTitles { get; set; }
@@ -35,6 +41,7 @@ namespace HenwoniDataModifierAPI.Data
         public DbSet<Models.Services.Genre.EntertainmentGenre> EntertainmentGenres { get; set; }
         public DbSet<Models.Services.Genre.LiteratureGenre> LiteratureGenres { get; set; }
         public DbSet<Models.Services.Genre.MusicGenre> MusicGenres { get; set; }
+        public DbSet<MyNetworkCategory> MyNetworkCategories { get; set; }
         #region Location
         public DbSet<Models.Pricing.Currency> Currencies { get; set; }
         public DbSet<Models.Location.Continent> Continents { get; set; }
@@ -68,13 +75,22 @@ namespace HenwoniDataModifierAPI.Data
         public DbSet<RefCServiceTitleTemplate> RefCServiceTitleTemplates { get; set; }
         public DbSet<RefCServiceTitleTemplateAlias> RefCServiceTitleTemplateAliases { get; set; }
         public DbSet<RefCServiceTitleTemplateTag> RefCServiceTitleTemplateTags { get; set; }
+        public DbSet<RefCJTDTemplateResponsibility> Responsibilities { get; set; }
+        public DbSet<RefCJTDTemplateSkillExperience> SkillsExperiences { get; set; }
+        public DbSet<RefCJTDTemplateIntro> Intros { get; set; }
+        public DbSet<Translation> Translations { get; set; }
+        public DbSet<ProjectFundMeListingCategory> ProjectFundMeListingCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<SupportTicketDepartment>().HasIndex(u => u.SystemName).IsUnique();
-            modelBuilder.Entity<JobContractType>().HasIndex(u => u.SystemName).IsUnique();
+            modelBuilder.Entity<JobLayoutType>().HasIndex(u => u.SystemName).IsUnique();
             modelBuilder.Entity<EntertainmentCategory>().HasIndex(u => u.SystemName).IsUnique();
+            modelBuilder.Entity<Translation>().Property(p => p.Text).IsUnicode(true);
+            modelBuilder.Entity<Translation>().Property(p => p.Title).IsUnicode(true);
+            modelBuilder.Entity<Translation>().Property(p => p.DefaultLanguageText).IsUnicode(true);
+            modelBuilder.Entity<Translation>().Property(p => p.Excerpt).IsUnicode(true);
 
             modelBuilder.Entity<CandidateSkill>()
                 .HasOne(t => t.PrimaryJobIndustry)

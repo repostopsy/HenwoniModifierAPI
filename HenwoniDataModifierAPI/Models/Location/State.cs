@@ -12,6 +12,7 @@ namespace HenwoniDataModifierAPI.Models.Location
         public virtual Continent? Continent { get; set; }
         public virtual ContinentRegion? ContinentRegion { get; set; }
         public virtual Country? Country { get; set; }
+        [JsonIgnore]
         public virtual ICollection<City> Cities { get; set; }
         public virtual Language? Language { get; set; }
     }

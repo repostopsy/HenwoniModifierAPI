@@ -12,6 +12,8 @@ namespace HenwoniDataModifierAPI.Models.Services.Common
         public string Title { get; set; }
         public string? Excerpt { get; set; }
         [Column(TypeName = "text")]
+        public String? HowToHire { get; set; }
+        [Column(TypeName = "text")]
         public string Template { get; set; }
         [JsonIgnore]
         [Column(TypeName = "text")]

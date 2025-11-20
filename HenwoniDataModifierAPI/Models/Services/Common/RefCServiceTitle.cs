@@ -2,6 +2,7 @@
 using HenwoniDataModifierAPI.Models.Employment;
 using HenwoniDataModifierAPI.Models.Location;
 using HenwoniDataModifierAPI.Models.Skills;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace HenwoniDataModifierAPI.Models.Services.Common
@@ -17,6 +18,8 @@ namespace HenwoniDataModifierAPI.Models.Services.Common
         }
         public long Id { get; set; }
         public long? ParentId { get; set; }
+        [Column(TypeName = "text")]
+        public String? HowToHire { get; set; }
         public string SystemName { get; set; }
         public string Title { get; set; }
         public string? PluralTitle { get; set; }

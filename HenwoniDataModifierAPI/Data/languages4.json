@@ -1,0 +1,1746 @@
+﻿[
+    {
+        "name": "Afrikaans (Namibia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Afrikaans (South Africa)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Afrikaans",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Akan (Ghana)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Akan",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Albanian (Albania)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Albanian",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Amharic (Ethiopia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Amharic",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Arabic (Algeria)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Arabic (Bahrain)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic (Egypt)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic (Iraq)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic (Jordan)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic (Kuwait)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic (Lebanon)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic (Libya)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic (Morocco)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic (Oman)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic (Qatar)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic (Saudi Arabia)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic (Sudan)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic (Syria)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic (Tunisia)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic (United Arab Emirates)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic (Yemen)",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Arabic",
+        "charset": "ISO-8859-6"
+    },
+    {
+        "name": "Armenian (Armenia)",
+        "charset": "ARMSCII-8"
+    },
+    {
+        "name": "Armenian",
+        "charset": "ARMSCII-8"
+    },
+    {
+        "name": "Assamese (India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Assamese",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Asu (Tanzania)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Asu",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Azerbaijani (Cyrillic, Azerbaijan)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Azerbaijani (Cyrillic, Azerbaijan)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Azerbaijani (Latin)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Azerbaijani (Latin, Azerbaijan)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Azerbaijani",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Bambara (Mali)",
+        "charset": "iso-8859-1"
+    },
+    {
+        "name": "Bambara",
+        "charset": "iso-8859-1"
+    },
+    {
+        "name": "Basque (Spain)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Basque",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Belarusian (Belarus)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Belarusian",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Bemba (Zambia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Bemba",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Bena (Tanzania)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Bena",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Bengali (Bangladesh)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Bengali (India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Bengali",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Bosnian (Bosnia and Herzegovina)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Bosnian",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Bulgarian (Bulgaria)",
+        "charset": "ISO-8859-2"
+    },
+    {
+        "name": "Bulgarian",
+        "charset": "ISO-8859-2"
+    },
+    {
+        "name": "Burmese (Myanmar [Burma])",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Burmese",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Cantonese (Traditional, Hong Kong SAR China)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Catalan (Spain)",
+        "charset": "ISO-8859-15"
+    },
+    {
+        "name": "Catalan",
+        "charset": "ISO-8859-15"
+    },
+    {
+        "name": "Central Morocco Tamazight (Latin)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Central Morocco Tamazight (Latin, Morocco)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Central Morocco Tamazight",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Cherokee (United States)",
+        "charset": "U+13A0"
+    },
+    {
+        "name": "Cherokee",
+        "charset": "U+13A0"
+    },
+    {
+        "name": "Chiga (Uganda)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Chiga",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Chinese (Simplified Han)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Chinese (Simplified Han, China)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Chinese (Simplified Han, Hong Kong SAR China)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Chinese (Simplified Han, Macau SAR China)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Chinese (Simplified Han, Singapore)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Chinese (Traditional Han)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Chinese (Traditional Han, Hong Kong SAR China)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Chinese (Traditional Han, Macau SAR China)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Chinese (Traditional Han, Taiwan)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Chinese",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Cornish (United Kingdom)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Cornish",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Croatian (Croatia)",
+        "charset": "ISO-8859-2"
+    },
+    {
+        "name": "Croatian",
+        "charset": "ISO-8859-2"
+    },
+    {
+        "name": "Czech (Czech Republic)",
+        "charset": "ISO-8859-2"
+    },
+    {
+        "name": "Czech",
+        "charset": "ISO-8859-2"
+    },
+    {
+        "name": "Danish (Denmark)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Danish",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Dutch (Belgium)",
+        "charset": "ISO-8859-15"
+    },
+    {
+        "name": "Dutch (Netherlands)",
+        "charset": "ISO-8859-15"
+    },
+    {
+        "name": "Dutch",
+        "charset": "ISO-8859-15"
+    },
+    {
+        "name": "Embu (Kenya)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Embu",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (American Samoa)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Australia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Belgium)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Belize)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Botswana)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Canada)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Guam)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Hong Kong SAR China)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Ireland)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Israel)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Jamaica)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Malta)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Marshall Islands)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Mauritius)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Namibia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (New Zealand)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Northern Mariana Islands)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Pakistan)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Philippines)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Singapore)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (South Africa)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Trinidad and Tobago)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (U.S. Minor Outlying Islands)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (U.S. Virgin Islands)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (United Kingdom)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (United States)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English (Zimbabwe)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "English",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Esperanto",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Estonian (Estonia)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Estonian",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Ewe (Ghana)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Ewe (Togo)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Ewe",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Faroese (Faroe Islands)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Faroese",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Filipino (Philippines)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Filipino",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Finnish (Finland)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Finnish",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Belgium)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Benin)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Burkina Faso)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Burundi)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Cameroon)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Canada)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Central African Republic)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Chad)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Comoros)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Congo - Brazzaville)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Congo - Kinshasa)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Côte d’Ivoire)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Djibouti)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Equatorial Guinea)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (France)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Gabon)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Guadeloupe)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Guinea)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Luxembourg)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Madagascar)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Mali)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Martinique)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Monaco)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Niger)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Rwanda)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Réunion)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Saint Barthélemy)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Saint Martin)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Senegal)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Switzerland)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French (Togo)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "French",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Fulah (Senegal)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Fulah",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Galician (Spain)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Galician",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Ganda (Uganda)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Ganda",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Georgian (Georgia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Georgian",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "German (Austria)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "German (Belgium)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "German (Germany)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "German (Liechtenstein)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "German (Luxembourg)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "German (Switzerland)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "German",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Greek (Cyprus)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Greek (Greece)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Greek",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Gujarati (India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Gujarati",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Gusii (Kenya)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Gusii",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Hausa (Latin)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Hausa (Latin, Ghana)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Hausa (Latin, Niger)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Hausa (Latin, Nigeria)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Hausa",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Hawaiian (United States)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Hawaiian",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Hebrew (Israel)",
+        "charset": "ISO-8859-8"
+    },
+    {
+        "name": "Hebrew",
+        "charset": "ISO-8859-8"
+    },
+    {
+        "name": "Hindi (India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Hindi",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Hungarian (Hungary)",
+        "charset": "ISO-8859-2"
+    },
+    {
+        "name": "Hungarian",
+        "charset": "ISO-8859-2"
+    },
+    {
+        "name": "Icelandic (Iceland)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Icelandic",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Igbo (Nigeria)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Igbo",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Indonesian (Indonesia)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Indonesian",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Irish (Ireland)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Irish",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Italian (Italy)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Italian (Switzerland)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Italian",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Japanese (Japan)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Japanese",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kabuverdianu (Cape Verde)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kabuverdianu",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kabyle (Algeria)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kabyle",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kalaallisut (Greenland)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Kalaallisut",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Kalenjin (Kenya)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kalenjin",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kamba (Kenya)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kamba",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kannada (India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kannada",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kazakh (Cyrillic)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kazakh (Cyrillic, Kazakhstan)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kazakh",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Khmer (Cambodia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Khmer",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kikuyu (Kenya)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kikuyu",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kinyarwanda (Rwanda)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Kinyarwanda",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Konkani (India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Konkani",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Korean (South Korea)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Korean",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Koyra Chiini (Mali)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Koyra Chiini",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Koyraboro Senni (Mali)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Koyraboro Senni",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Langi (Tanzania)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Langi",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Latvian (Latvia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Latvian",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Lithuanian (Lithuania)",
+        "charset": "ISO-8859-13"
+    },
+    {
+        "name": "Lithuanian",
+        "charset": "ISO-8859-13"
+    },
+    {
+        "name": "Luo (Kenya)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Luo",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Luyia (Kenya)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Luyia",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Macedonian (Macedonia)",
+        "charset": "ISO-8859-5"
+    },
+    {
+        "name": "Macedonian",
+        "charset": "ISO-8859-5"
+    },
+    {
+        "name": "Machame (Tanzania)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Machame",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Makonde (Tanzania)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Makonde",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Malagasy (Madagascar)",
+        "charset": "ISO-8859-15"
+    },
+    {
+        "name": "Malagasy",
+        "charset": "ISO-8859-15"
+    },
+    {
+        "name": "Malay (Brunei)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Malay (Malaysia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Malay",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Malayalam (India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Malayalam",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Maltese (Malta)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Maltese",
+        "charset": "ISO-8859-3"
+    },
+    {
+        "name": "Manx (United Kingdom)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Manx",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Marathi (India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Marathi",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Masai (Kenya)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Masai (Tanzania)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Masai",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Meru (Kenya)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Meru",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Morisyen (Mauritius)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Morisyen",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Nama (Namibia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Nama",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Nepali (India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Nepali (Nepal)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Nepali",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "North Ndebele (Zimbabwe)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "North Ndebele",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Norwegian Bokmål (Norway)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Norwegian Bokmål",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Norwegian Nynorsk (Norway)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Norwegian Nynorsk",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Nyankole (Uganda)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Nyankole",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Oriya (India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Oriya",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Oromo (Ethiopia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Oromo (Kenya)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Oromo",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Pashto (Afghanistan)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Pashto",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Persian (Afghanistan)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Persian (Iran)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Persian",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Polish (Poland)",
+        "charset": "ISO-8859-2"
+    },
+    {
+        "name": "Polish",
+        "charset": "ISO-8859-2"
+    },
+    {
+        "name": "Portuguese (Brazil)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Portuguese (Guinea-Bissau)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Portuguese (Mozambique)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Portuguese (Portugal)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Portuguese",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Punjabi (Arabic)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Punjabi (Arabic, Pakistan)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Punjabi (Gurmukhi)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Punjabi (Gurmukhi, India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Punjabi",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Romanian (Moldova)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Romanian (Romania)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Romanian",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Romansh (Switzerland)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Romansh",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Rombo (Tanzania)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Rombo",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Russian (Moldova)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Russian (Russia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Russian (Ukraine)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Russian",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Rwa (Tanzania)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Rwa",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Samburu (Kenya)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Samburu",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Sango (Central African Republic)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Sango",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Sena (Mozambique)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Sena",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Serbian (Cyrillic)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Serbian (Cyrillic, Bosnia and Herzegovina)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Serbian (Cyrillic, Montenegro)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Serbian (Cyrillic, Serbia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Serbian (Latin)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Serbian (Latin, Bosnia and Herzegovina)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Serbian (Latin, Montenegro)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Serbian (Latin, Serbia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Serbian",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Shona (Zimbabwe)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Shona",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Sichuan Yi (China)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Sichuan Yi",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Sinhala (Sri Lanka)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Sinhala",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Slovak (Slovakia)",
+        "charset": "ISO-8859-2"
+    },
+    {
+        "name": "Slovak",
+        "charset": "ISO-8859-2"
+    },
+    {
+        "name": "Slovenian (Slovenia)",
+        "charset": "ISO-8859-2"
+    },
+    {
+        "name": "Slovenian",
+        "charset": "ISO-8859-2"
+    },
+    {
+        "name": "Soga (Uganda)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Soga",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Somali (Djibouti)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Somali (Ethiopia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Somali (Kenya)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Somali (Somalia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Somali",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Argentina)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Bolivia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Chile)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Colombia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Costa Rica)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Dominican Republic)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Ecuador)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (El Salvador)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Equatorial Guinea)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Guatemala)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Honduras)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Latin America)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Mexico)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Nicaragua)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Panama)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Paraguay)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Peru)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Puerto Rico)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Spain)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (United States)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Uruguay)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish (Venezuela)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Spanish",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Swahili (Kenya)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Swahili (Tanzania)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Swahili",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Swedish (Finland)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Swedish (Sweden)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Swedish",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Swiss German (Switzerland)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Swiss German",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Tachelhit (Latin)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Tachelhit (Latin, Morocco)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Tachelhit (Tifinagh)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Tachelhit (Tifinagh, Morocco)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Tachelhit",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Taita (Kenya)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Taita",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Tamil (India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Tamil (Sri Lanka)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Tamil",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Telugu (India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Telugu",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Teso (Kenya)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Teso (Uganda)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Teso",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Thai (Thailand)",
+        "charset": "TIS-620"
+    },
+    {
+        "name": "Thai",
+        "charset": "TIS-620"
+    },
+    {
+        "name": "Tibetan (China)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Tibetan (India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Tibetan",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Tigrinya (Eritrea)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Tigrinya (Ethiopia)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Tigrinya",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Tonga (Tonga)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Tonga",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Turkish (Turkey)",
+        "charset": "ISO-8859-9"
+    },
+    {
+        "name": "Turkish",
+        "charset": "ISO-8859-9"
+    },
+    {
+        "name": "Ukrainian (Ukraine)",
+        "charset": "KOI8-U"
+    },
+    {
+        "name": "Ukrainian",
+        "charset": "KOI8-U"
+    },
+    {
+        "name": "Urdu (India)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Urdu (Pakistan)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Urdu",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Uzbek (Arabic)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Uzbek (Arabic, Afghanistan)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Uzbek (Cyrillic)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Uzbek (Cyrillic, Uzbekistan)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Uzbek (Latin)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Uzbek (Latin, Uzbekistan)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Uzbek",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Vietnamese (Vietnam)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Vietnamese",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Vunjo (Tanzania)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Vunjo",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Welsh (United Kingdom)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Welsh",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Yoruba (Nigeria)",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Yoruba",
+        "charset": "UTF-8"
+    },
+    {
+        "name": "Zulu (South Africa)",
+        "charset": "ISO-8859-1"
+    },
+    {
+        "name": "Zulu",
+        "charset": "ISO-8859-1"
+    }
+]

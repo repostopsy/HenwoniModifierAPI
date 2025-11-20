@@ -7,6 +7,7 @@ using HenwoniDataModifierAPI.Common.Models;
 
 
 using System.ComponentModel.DataAnnotations;
+using HenwoniDataModifierAPI.Models.Location;
 
 namespace HenwoniDataModifierAPI.Models.Common
 {
@@ -19,6 +20,7 @@ namespace HenwoniDataModifierAPI.Models.Common
         [JsonIgnore]
         [Key]
 		public long Id { get; set; }
+		public long ParentId { get; set; }
 		public string SystemName { get; set; }
         [JsonIgnore]
         public string? Code { get; set; }
@@ -37,7 +39,10 @@ namespace HenwoniDataModifierAPI.Models.Common
         public DateTime DateCreated { get; set; }
         [JsonIgnore]
         public DateTime DateUpdated { get; set; }
-		[JsonIgnore]
+        public virtual ApplicationUser? Author { get; set; }
+        public bool Approved { get; set; }
+        public double Rating { get; set; }
+        [JsonIgnore]
 		public virtual ICollection<JobIndustry> JobIndustries { get; set; }
         [JsonIgnore]
         public virtual ICollection<CandidateSkill> CandidateSkills { get; set; }
@@ -47,6 +52,8 @@ namespace HenwoniDataModifierAPI.Models.Common
         public virtual ICollection<RefCommonJobTitleBenefit> Benefits { get; set; }
         [JsonIgnore]
         public virtual JobLevel? JobLevel { get; set; }
+        [JsonIgnore]
+        public virtual Language? Language { get; set; }
         [JsonIgnore]
         public virtual ICollection<RefCommonJobTitleSalary> Salaries { get; set; }
     }

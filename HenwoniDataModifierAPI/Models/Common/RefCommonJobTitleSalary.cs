@@ -24,5 +24,8 @@ namespace HenwoniDataModifierAPI.Models.Common
         public virtual City? City { get; set; }
         [JsonIgnore]
         public virtual RefCommonJobTitle JobTitle { get; set; }
+        public virtual ApplicationUser? Author { get; set; }
+        public double Rating { get; set; }
+        public bool Approved { get; set; }
     }
 }

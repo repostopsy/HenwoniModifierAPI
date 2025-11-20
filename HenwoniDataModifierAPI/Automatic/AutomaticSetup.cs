@@ -13,8 +13,9 @@ using HenwoniDataModifierAPI.Models.Skills;
 using HenwoniDataModifierAPI.Models.Services;
 using HenwoniDataModifierAPI.Models.Organisation;
 using HenwoniDataModifierAPI.Models.Employment;
-using DotLiquid;
-using System.Xml;
+using HenwoniDataModifierAPI.Models;
+using HenwoniDataModifierAPI.Models.Networks;
+using HenwoniDataModifierAPI.Models.Translator;
 
 namespace HenwoniDataModifierAPI.Automatic
 {
@@ -25,6 +26,7 @@ namespace HenwoniDataModifierAPI.Automatic
         private bool _stopTask = false;
         ApplicationDbContext dbContext;
         private readonly IConfiguration _config;
+        public Language DefaultLanguage { get; set; }
 
         public AutomaticSetup (IServiceProvider serviceProvider, IConfiguration config)
         {
@@ -36,7 +38,11 @@ namespace HenwoniDataModifierAPI.Automatic
         {
             using IServiceScope scope = _serviceProvider.CreateScope();
             await using ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            await SetupTransilationsAsync(context);
+            await SetupSiteMetaAsync(context);
             await SetupLanguagesAsync(context);
+            DefaultLanguage = await context.Languages.Where(x => x.SystemName == Constants.DefaultLanguage).FirstOrDefaultAsync();
+            await SetupMyNetworkCategoriesAsync(context);
             await SetupJobTitlesAsync(context);
             await SetupOtherEntitiesAsync(context);
             await SetupLocationsAsync(context);
@@ -75,6 +81,7 @@ namespace HenwoniDataModifierAPI.Automatic
 
         public async Task SetupJobTitlesAsync(ApplicationDbContext dbContext)
         {
+            await LanguagesFix1Async(dbContext);
             // await SetupJobTitlesUsingJobTitlesTextAsync();
             var assembly = Assembly.GetExecutingAssembly();
             var t = Assembly.GetExecutingAssembly().GetManifestResourceNames();
@@ -105,6 +112,100 @@ namespace HenwoniDataModifierAPI.Automatic
                     await dbContext.SaveChangesAsync();
                 }
             }
+        }
+        
+        public class TransilationTEmp
+        {
+            public string name { get; set; }
+            public string value { get; set; }
+        }
+        public class SiteMetaTEmp
+        {
+            public string name { get; set; }
+            public string value { get; set; }
+        }
+
+        public static async Task SetupSiteMetaAsync(ApplicationDbContext dbContext)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var t = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            using (Stream stream = assembly.GetManifestResourceStream("HenwoniDataModifierAPI.Data.SiteMeta.json"))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string txt = "";
+                    while (!reader.EndOfStream)
+                    {
+                        txt += reader.ReadLine() + "\n";
+                    }
+                    List<SiteMetaTEmp> r = JsonSerializer.Deserialize<List<SiteMetaTEmp>>(txt);
+                    foreach (var jb in r)
+                    {
+                        var existing = await dbContext.SiteMeta.Where(x => x.SystemName == jb.name).FirstOrDefaultAsync();
+                        if (existing == null)
+                        {
+                            existing = new SiteMeta()
+                            {
+                                Value = jb.value,
+                                SystemName = jb.name
+                            };
+                            dbContext.SiteMeta.Add(existing);
+                            existing.Language = await dbContext.Languages.Where(x => x.SystemName == HenwoniDataModifierAPI.Utilities.Constants.DefaultLanguage).FirstOrDefaultAsync();
+                        }
+                        existing.Value = jb.value;
+                    }
+                    await dbContext.SaveChangesAsync();
+                }
+            }
+        }
+
+        public static async Task SetupTransilationsAsync(ApplicationDbContext dbContext)
+        {
+            // await SetupJobTitlesUsingTextAsync();
+            var assembly = Assembly.GetExecutingAssembly();
+            var t = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            using (Stream stream = assembly.GetManifestResourceStream("HenwoniDataModifierAPI.Data.Transilations.Pages.json"))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string txt = "";
+                    while (!reader.EndOfStream)
+                    {
+                        txt += reader.ReadLine() + "\n";
+                    }
+                    List<TransilationTEmp> r = JsonSerializer.Deserialize<List<TransilationTEmp>>(txt);
+                    foreach (var jb in r)
+                    {
+                        var existing = await dbContext.Translations.Where(x => x.SystemContextIdentity == jb.name).FirstOrDefaultAsync();
+                        if (existing == null)
+                        {
+                            existing = new HenwoniDataModifierAPI.Models.Location.Translation()
+                            {
+                                Text = jb.value,
+                                SystemContextIdentity = jb.name,
+                                SystemName = jb.name,
+                                DefaultLanguageText = jb.value,
+                            };
+                            dbContext.Translations.Add(existing);
+                            existing.SystemContextIdentity = jb.name;
+                            existing.SystemName = jb.name;
+                            existing.Language = await dbContext.Languages.Where(x => x.SystemName == HenwoniDataModifierAPI.Utilities.Constants.DefaultLanguage).FirstOrDefaultAsync();
+                        }
+                        existing.Text = jb.value;
+                    }
+                    await dbContext.SaveChangesAsync();
+                }
+            }
+        }
+
+
+        private async Task LanguagesFix1Async(ApplicationDbContext dbContext)
+        {
+            foreach (var c in await dbContext.RefCommonJobTitles.Where(x => x.Language == null).ToListAsync())
+            {
+                c.Language = await dbContext.Languages.Where(x=>x.SystemName== Constants.DefaultLanguage).FirstOrDefaultAsync();
+            }
+            await dbContext.SaveChangesAsync();
         }
 
         private async Task SetupJobTitlesUsingJobTitlesTextAsync()
@@ -363,6 +464,734 @@ namespace HenwoniDataModifierAPI.Automatic
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task SetupEducationTrainingAsync(ApplicationDbContext dbContext)
+        {
+            MyNetworkCategory d0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "education-training").FirstOrDefaultAsync();
+            if (d0 == null)
+            {
+                d0 = new MyNetworkCategory { Title = "Education & Training", Language = DefaultLanguage, SystemName = "education-training", Excerpt = "Dedicated to learning, teaching, and knowledge transfer. Encompasses formal education and lifelong learning." };
+                dbContext.MyNetworkCategories.Add(d0);
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "teaching-pedagogy").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Teaching & Pedagogy", Language = DefaultLanguage, SystemName = "teaching-pedagogy", Excerpt = "Instructional methods and classroom management." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "curriculum-development").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Curriculum Development", Language = DefaultLanguage, SystemName = "curriculum-development", Excerpt = "Designing educational content and standards." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "educational-technology").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Educational Technology", Language = DefaultLanguage, SystemName = "educational-technology", Excerpt = "Tools and platforms for learning." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "e-learning").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "E-learning", Language = DefaultLanguage, SystemName = "e-learning", Excerpt = "Online courses and digital instruction." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "special-education").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Special Education", Language = DefaultLanguage, SystemName = "special-education", Excerpt = "Supporting diverse learning needs." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "academic-research").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Academic Research", Language = DefaultLanguage, SystemName = "academic-research", Excerpt = "Scholarly investigation and publication." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "instructional-design").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Instructional Design", Language = DefaultLanguage, SystemName = "instructional-design", Excerpt = "Structuring effective learning experiences." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+        }
+        public async Task SetupEnvironmentalSustainabilityAsync(ApplicationDbContext dbContext)
+        {
+            MyNetworkCategory d0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "environmental-sustainability").FirstOrDefaultAsync();
+            if (d0 == null)
+            {
+                d0 = new MyNetworkCategory { Title = "Environmental & Sustainability", Language = DefaultLanguage, SystemName = "environmental-sustainability", Excerpt = "Dedicated to protecting the planet and promoting responsible practices. Combines science, policy, and innovation." };
+                dbContext.MyNetworkCategories.Add(d0);
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "climate-science").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Climate Science", Language = DefaultLanguage, SystemName = "climate-science", Excerpt = "Studying climate change and mitigation." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "renewable-energy").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Renewable Energy", Language = DefaultLanguage, SystemName = "renewable-energy", Excerpt = "Solar, wind, and sustainable power." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "conservation").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Conservation", Language = DefaultLanguage, SystemName = "conservation", Excerpt = "Wildlife protection and habitat preservation." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "urban-planning").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Urban Planning", Language = DefaultLanguage, SystemName = "urban-planning", Excerpt = "Designing sustainable cities and infrastructure." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "sustainable-development").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Sustainable Development", Language = DefaultLanguage, SystemName = "sustainable-development", Excerpt = "Balancing growth with environmental care." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "agriculture-food-systems").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Agriculture & Food Systems", Language = DefaultLanguage, SystemName = "agriculture-food-systems", Excerpt = "Farming, food security, and innovation." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+        }
+        public async Task SetupLegalGovernmentAsync(ApplicationDbContext dbContext)
+        {
+            MyNetworkCategory d0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "legal-government").FirstOrDefaultAsync();
+            if (d0 == null)
+            {
+                d0 = new MyNetworkCategory { Title = "Legal & Government", Language = DefaultLanguage, SystemName = "legal-government", Excerpt = "Focuses on law, policy, and public service. Involves regulation, justice, and civic responsibility." };
+                dbContext.MyNetworkCategories.Add(d0);
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "law-Legal-studies").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Law & Legal Studies", Language = DefaultLanguage, SystemName = "law-Legal-studies", Excerpt = "Legal systems, contracts, and advocacy." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "public-policy").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Public Policy", Language = DefaultLanguage, SystemName = "public-policy", Excerpt = "Government decisions and societal impact." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "criminal-justice").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Criminal Justice", Language = DefaultLanguage, SystemName = "criminal-justice", Excerpt = "Law enforcement and corrections." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "international-relations").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "International Relations", Language = DefaultLanguage, SystemName = "international-relations", Excerpt = "Diplomacy and global affairs." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "government-civil-service").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Government & Civil Service", Language = DefaultLanguage, SystemName = "government-civil-service", Excerpt = "Public administration and policy." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "military-defense").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Military & Defense", Language = DefaultLanguage, SystemName = "military-defense", Excerpt = "National security and strategic operations." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+        }
+        public async Task SetupEntertainmentMediaAsync(ApplicationDbContext dbContext)
+        {
+            MyNetworkCategory d0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "entertainment-media").FirstOrDefaultAsync();
+            if (d0 == null)
+            {
+                d0 = new MyNetworkCategory { Title = "Entertainment & Media", Language = DefaultLanguage, SystemName = "entertainment-media", Excerpt = "Engages audiences through storytelling, performance, and interaction. Combines creativity with technology.\r\n" };
+                dbContext.MyNetworkCategories.Add(d0);
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "hospitality").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Television & Broadcasting", Language = DefaultLanguage, SystemName = "television-broadcasting", Excerpt = "News, shows, and live events." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "music-industry").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Music Industry", Language = DefaultLanguage, SystemName = "music-industry", Excerpt = "Including production, performance, and distribution." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "music-industry").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Gaming & Esports", Language = DefaultLanguage, SystemName = "gaming-esports", Excerpt = "Competitive play and game development." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "social-media").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Social Media", Language = DefaultLanguage, SystemName = "social-media", Excerpt = "Content creation and digital influence." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "journalism").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Journalism", Language = DefaultLanguage, SystemName = "journalism", Excerpt = "Reporting, writing, and investigative work." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "podcasting").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Podcasting", Language = DefaultLanguage, SystemName = "podcasting", Excerpt = "Audio storytelling and commentary." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "influencer-marketing").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Influencer Marketing", Language = DefaultLanguage, SystemName = "influencer-marketing", Excerpt = "Brand partnerships and audience engagement." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "event-planning").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Event Planning", Language = DefaultLanguage, SystemName = "event-planning", Excerpt = "Organizing experiences and gatherings." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+        }
+
+        public async Task SetupTravelLifestyleAsync(ApplicationDbContext dbContext)
+        {
+            MyNetworkCategory d0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "travel-lifestyle").FirstOrDefaultAsync();
+            if (d0 == null)
+            {
+                d0 = new MyNetworkCategory { Title = "Travel & Lifestyle", Language = DefaultLanguage, SystemName = "travel-lifestyle", Excerpt = "Focuses on personal enrichment, leisure, and well-being. Often intersects with hospitality and consumer trends." };
+                dbContext.MyNetworkCategories.Add(d0);
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "hospitality").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Hospitality", Language = DefaultLanguage, SystemName = "hospitality", Excerpt = "Hotels, customer service, and guest experiences." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "tourism").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Tourism", Language = DefaultLanguage, SystemName = "tourism", Excerpt = "Travel planning and destination management." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "culinary-arts").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Culinary Arts", Language = DefaultLanguage, SystemName = "culinary-arts", Excerpt = "Cooking, baking, and food presentation." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "wellness-fitness").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Wellness & Fitness", Language = DefaultLanguage, SystemName = "wellness-fitness", Excerpt = "Physical health and mental well-being." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "fashion-beauty").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Fashion & Beauty", Language = DefaultLanguage, SystemName = "fashion-beauty", Excerpt = "Style, grooming, and self-expression." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "home-garden").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Home & Garden", Language = DefaultLanguage, SystemName = "home-garden", Excerpt = "Interior styling and landscaping." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "personal-development").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Personal Development", Language = DefaultLanguage, SystemName = "personal-development", Excerpt = "Self-improvement and goal setting." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "hobbies-crafts").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Hobbies & Crafts", Language = DefaultLanguage, SystemName = "hobbies-crafts", Excerpt = "DIY, collecting, and creative pastimes." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+        }
+        public async Task SocialCulturalAsync(ApplicationDbContext dbContext)
+        {
+            MyNetworkCategory d0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "social-cultural").FirstOrDefaultAsync();
+            if (d0 == null)
+            {
+                d0 = new MyNetworkCategory { Title = "Social & Cultural", Language = DefaultLanguage, SystemName = "social-cultural", Excerpt = "Explores human behavior, beliefs, and societal structures. Often involves critical thinking and cultural awareness." };
+                dbContext.MyNetworkCategories.Add(d0);
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "sociology").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Sociology", Language = DefaultLanguage, SystemName = "sociology", Excerpt = "Social systems, institutions, and relationships." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "psychology").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Psychology", Language = DefaultLanguage, SystemName = "psychology", Excerpt = "Mental processes and behavior." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "anthropology").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Anthropology", Language = DefaultLanguage, SystemName = "anthropology", Excerpt = "Human evolution, culture, and traditions." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "history").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "History", Language = DefaultLanguage, SystemName = "history", Excerpt = "Past events and their impact." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "political-science").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Political Science", Language = DefaultLanguage, SystemName = "political-science", Excerpt = "Governance, policy, and political theory." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "philosophy").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Philosophy", Language = DefaultLanguage, SystemName = "philosophy", Excerpt = "Ethics, logic, and existential questions." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "religion-theology").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Religion & Theology", Language = DefaultLanguage, SystemName = "religion-theology", Excerpt = "Belief systems and spiritual practices." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "languages-linguistics").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Languages & Linguistics", Language = DefaultLanguage, SystemName = "languages-linguistics", Excerpt = "Communication, grammar, and translation." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "cultural-studies").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Cultural Studies", Language = DefaultLanguage, SystemName = "cultural-studies", Excerpt = "Identity, media, and global perspectives." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "ethics").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Ethics", Language = DefaultLanguage, SystemName = "ethics", Excerpt = "Moral reasoning and decision-making." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+        }
+        public async Task SetupBusinessProfessionalAsync(ApplicationDbContext dbContext)
+        {
+            MyNetworkCategory d0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "business-professional").FirstOrDefaultAsync();
+            if (d0 == null)
+            {
+                d0 = new MyNetworkCategory { Title = "Business & Professional", Language = DefaultLanguage, SystemName = "business-professional", Excerpt = "Focuses on strategy, operations, and organizational success. Involves leadership, financial management, and market dynamics" };
+                dbContext.MyNetworkCategories.Add(d0);
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "marketing").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Marketing", Language = DefaultLanguage, SystemName = "marketing", Excerpt = "Promoting products and understanding consumer behavior." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "finance").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Finance", Language = DefaultLanguage, SystemName = "finance", Excerpt = "Managing money, investments, and risk" };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "accounting").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Accounting", Language = DefaultLanguage, SystemName = "accounting", Excerpt = "Tracking financial transactions and compliance." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+            }
+            {
+                MyNetworkCategory e1 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "human-resources").FirstOrDefaultAsync();
+                if (e1 == null)
+                {
+                    e1 = new MyNetworkCategory { Parent = d0, Title = "Human Resources", Language = DefaultLanguage, SystemName = "human-resources", Excerpt = "Talent acquisition, development, and culture." };
+                    dbContext.MyNetworkCategories.Add(e1);
+                }
+            }
+            {
+                MyNetworkCategory e1 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "management-leadership").FirstOrDefaultAsync();
+                if (e1 == null)
+                {
+                    e1 = new MyNetworkCategory { Parent = d0, Title = "Management & Leadership", Language = DefaultLanguage, SystemName = "management-leadership", Excerpt = "Strategic planning and team coordination." };
+                    dbContext.MyNetworkCategories.Add(e1);
+                }
+            }
+            {
+                MyNetworkCategory e1 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "entrepreneurship").FirstOrDefaultAsync();
+                if (e1 == null)
+                {
+                    e1 = new MyNetworkCategory { Parent = d0, Title = "Entrepreneurship", Language = DefaultLanguage, SystemName = "entrepreneurship", Excerpt = "Building and scaling businesses." };
+                    dbContext.MyNetworkCategories.Add(e1);
+                }
+            }
+            {
+                MyNetworkCategory e1 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "economics").FirstOrDefaultAsync();
+                if (e1 == null)
+                {
+                    e1 = new MyNetworkCategory { Parent = d0, Title = "Economics", Language = DefaultLanguage, SystemName = "economics", Excerpt = "Market forces, policy, and resource allocation." };
+                    dbContext.MyNetworkCategories.Add(e1);
+                }
+            }
+            {
+                MyNetworkCategory e1 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "real-estate").FirstOrDefaultAsync();
+                if (e1 == null)
+                {
+                    e1 = new MyNetworkCategory { Parent = d0, Title = "Real Estate", Language = DefaultLanguage, SystemName = "real-estate", Excerpt = "Property development, sales, and valuation." };
+                    dbContext.MyNetworkCategories.Add(e1);
+                }
+            }
+            {
+                MyNetworkCategory e1 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "sales").FirstOrDefaultAsync();
+                if (e1 == null)
+                {
+                    e1 = new MyNetworkCategory { Parent = d0, Title = "Sales", Language = DefaultLanguage, SystemName = "sales", Excerpt = "Customer engagement and revenue generation." };
+                    dbContext.MyNetworkCategories.Add(e1);
+                }
+            }
+            {
+                MyNetworkCategory e1 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "operations-logistics").FirstOrDefaultAsync();
+                if (e1 == null)
+                {
+                    e1 = new MyNetworkCategory { Parent = d0, Title = "Operations & Logistics", Language = DefaultLanguage, SystemName = "operations-logistics", Excerpt = "Supply chain and process optimization." };
+                    dbContext.MyNetworkCategories.Add(e1);
+                }
+            }
+        }
+        public async Task SetupScientificMedicalAsync(ApplicationDbContext dbContext)
+        {
+            MyNetworkCategory d0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "scientific-medical").FirstOrDefaultAsync();
+            if (d0 == null)
+            {
+                d0 = new MyNetworkCategory { Title = "Scientific & Medical", Language = DefaultLanguage, SystemName = "scientific-medical", Excerpt = "Driven by inquiry, experimentation, and evidence. Focuses on understanding natural phenomena and improving health." };
+                dbContext.MyNetworkCategories.Add(d0);
+            }
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "biology").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                    e0 = new MyNetworkCategory { Parent = d0, Title = "Biology", Language = DefaultLanguage, SystemName = "biology", Excerpt = "Study of living organisms and ecosystems." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+                MyNetworkCategory e1 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "chemistry").FirstOrDefaultAsync();
+                if (e1 == null)
+                {
+                    e1 = new MyNetworkCategory { Parent = d0, Title = "Chemistry", Language = DefaultLanguage, SystemName = "chemistry", Excerpt = "Composition, reactions, and properties of matter." };
+                    dbContext.MyNetworkCategories.Add(e1);
+                }
+                MyNetworkCategory e2 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "physics").FirstOrDefaultAsync();
+                if (e2 == null)
+                {
+                    e2 = new MyNetworkCategory { Parent = d0, Title = "Physics", Language = DefaultLanguage, SystemName = "physics", Excerpt = "Forces, energy, and the structure of the universe." };
+                    dbContext.MyNetworkCategories.Add(e2);
+                }
+                MyNetworkCategory e3 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "physics").FirstOrDefaultAsync();
+                if (e3 == null)
+                {
+                    e3 = new MyNetworkCategory { Parent = d0, Title = "Medicine & Healthcare", Language = DefaultLanguage, SystemName = "medicine-healthcare", Excerpt = "Diagnosis, treatment, and patient care." };
+                    dbContext.MyNetworkCategories.Add(e3);
+                }
+                MyNetworkCategory e4 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "environmental-science").FirstOrDefaultAsync();
+                if (e4 == null)
+                {
+                    e4 = new MyNetworkCategory { Parent = d0, Title = "Environmental Science", Language = DefaultLanguage, SystemName = "environmental-science", Excerpt = "Ecosystems, sustainability, and climate." };
+                    dbContext.MyNetworkCategories.Add(e4);
+                }
+                MyNetworkCategory e5 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "genetics").FirstOrDefaultAsync();
+                if (e5 == null)
+                {
+                    e5 = new MyNetworkCategory { Parent = d0, Title = "Genetics", Language = DefaultLanguage, SystemName = "genetics", Excerpt = "Heredity, DNA, and molecular biology." };
+                    dbContext.MyNetworkCategories.Add(e5);
+                }
+                MyNetworkCategory e6 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "pharmacology").FirstOrDefaultAsync();
+                if (e6 == null)
+                {
+                    e6 = new MyNetworkCategory { Parent = d0, Title = "Pharmacology", Language = DefaultLanguage, SystemName = "pharmacology", Excerpt = "Drug development and effects" };
+                    dbContext.MyNetworkCategories.Add(e6);
+                }
+                MyNetworkCategory e7 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "astronomy").FirstOrDefaultAsync();
+                if (e7 == null)
+                {
+                    e7 = new MyNetworkCategory { Parent = d0, Title = "Astronomy", Language = DefaultLanguage, SystemName = "astronomy", Excerpt = "Celestial bodies and cosmic phenomena." };
+                    dbContext.MyNetworkCategories.Add(e7);
+                }
+                MyNetworkCategory e8 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "astronomy").FirstOrDefaultAsync();
+                if (e8 == null)
+                {
+                    e8 = new MyNetworkCategory { Parent = d0, Title = "Geology", Language = DefaultLanguage, SystemName = "geology", Excerpt = "Earth’s structure, minerals, and tectonics." };
+                    dbContext.MyNetworkCategories.Add(e8);
+                }
+        }
+
+        public async Task SetupCreativeDesignCategoriesAsync(ApplicationDbContext dbContext)
+        {
+            MyNetworkCategory d0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "creative-design").FirstOrDefaultAsync();
+            if (d0 == null)
+            {
+                d0 = new MyNetworkCategory { Title = "Creative & Design", Language = DefaultLanguage, SystemName = "creative-design", Excerpt = "Network focusing Visual Arts, Graphic Design, Animation, Fashion Design, etc" };
+                dbContext.MyNetworkCategories.Add(d0);
+            }
+                MyNetworkCategory e0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "visual-arts").FirstOrDefaultAsync();
+                if (e0 == null)
+                {
+                e0 = new MyNetworkCategory { Parent= d0, Title = "Visual Arts", Language = DefaultLanguage, SystemName = "visual-arts", Excerpt = "Painting, drawing, sculpture, and mixed media." };
+                    dbContext.MyNetworkCategories.Add(e0);
+                }
+                MyNetworkCategory e1 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "graphic-design").FirstOrDefaultAsync();
+                if (e1 == null)
+                {
+                    e1 = new MyNetworkCategory { Parent = d0, Title = "Graphic Design", Language = DefaultLanguage, SystemName = "graphic-design", Excerpt = "Including Logos, branding, posters, and digital layouts." };
+                    dbContext.MyNetworkCategories.Add(e1);
+                }
+                MyNetworkCategory e2 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "animation").FirstOrDefaultAsync();
+                if (e2 == null)
+                {
+                    e2 = new MyNetworkCategory { Parent = d0, Title = "Animation", Language = DefaultLanguage, SystemName = "animation", Excerpt = "Including Motion graphics, character animation, and storytelling." };
+                    dbContext.MyNetworkCategories.Add(e2);
+                }
+                MyNetworkCategory e3 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "fashion-design").FirstOrDefaultAsync();
+                if (e3 == null)
+                {
+                    e3 = new MyNetworkCategory { Parent = d0, Title = "Fashion Design", Language = DefaultLanguage, SystemName = "fashion-design", Excerpt = "Including Clothing, accessories, and textile innovation." };
+                    dbContext.MyNetworkCategories.Add(e3);
+                }
+                MyNetworkCategory e4 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "interior-design").FirstOrDefaultAsync();
+                if (e4 == null)
+                {
+                    e4 = new MyNetworkCategory { Parent = d0, Title = "Interior Design", Language = DefaultLanguage, SystemName = "interior-design", Excerpt = "Including Spatial planning, decor, and ambiance creation." };
+                    dbContext.MyNetworkCategories.Add(e4);
+                }
+                MyNetworkCategory e5 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "creative-design").FirstOrDefaultAsync();
+                if (e5 == null)
+                {
+                    e5 = new MyNetworkCategory { Parent = d0, Title = "Photography", Language = DefaultLanguage, SystemName = "creative-design", Excerpt = "Capturing moments, portraits, and visual narratives." };
+                    dbContext.MyNetworkCategories.Add(e5);
+                }
+                MyNetworkCategory e6 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "creative-design").FirstOrDefaultAsync();
+                if (e6 == null)
+                {
+                    e6 = new MyNetworkCategory { Parent = d0, Title = "Music & Sound Design", Language = DefaultLanguage, SystemName = "music-sound-design", Excerpt = "Composition, audio editing, and soundscapes." };
+                    dbContext.MyNetworkCategories.Add(e6);
+                }
+                MyNetworkCategory e7 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "writing-storytelling").FirstOrDefaultAsync();
+                if (e7 == null)
+                {
+                    e7 = new MyNetworkCategory { Parent = d0, Title = "Writing & Storytelling", Language = DefaultLanguage, SystemName = "writing-storytelling", Excerpt = "Writing & Storytelling: Fiction, non - fiction, screenwriting, and copywriting." };
+                    dbContext.MyNetworkCategories.Add(e7);
+                }
+                MyNetworkCategory e8 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "film-video-production").FirstOrDefaultAsync();
+                if (e8 == null)
+                {
+                    e8 = new MyNetworkCategory { Parent = d0, Title = "Film & Video Production", Language = DefaultLanguage, SystemName = "film-video-production", Excerpt = "Cinematography, editing, and directing." };
+                    dbContext.MyNetworkCategories.Add(e8);
+                }
+                MyNetworkCategory e9 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "game-design").FirstOrDefaultAsync();
+                if (e9 == null)
+                {
+                    e9 = new MyNetworkCategory { Parent = d0, Title = "Game Design", Language = DefaultLanguage, SystemName = "game-design", Excerpt = "Including World-building, mechanics, and interactive storytelling." };
+                    dbContext.MyNetworkCategories.Add(e9);
+                }
+                MyNetworkCategory e10 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "ui-ux-design").FirstOrDefaultAsync();
+                if (e10 == null)
+                {
+                    e10 = new MyNetworkCategory { Parent = d0, Title = "UI / UX Design", Language = DefaultLanguage, SystemName = "ui-ux-design", Excerpt = "Designing user interfaces and optimizing user experiences." };
+                    dbContext.MyNetworkCategories.Add(e10);
+                }
+
+            MyNetworkCategory d1 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "creative-design").FirstOrDefaultAsync();
+            if (d1 == null)
+            {
+                d1 = new MyNetworkCategory { Title = "Analytical & Technical", Language = DefaultLanguage, SystemName = "analytical-technical", Excerpt = "Centers on logic, precision, and problem-solving. Often involves data, systems, and structured thinking." };
+                dbContext.MyNetworkCategories.Add(d1);
+            }
+                MyNetworkCategory t0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "computer-science").FirstOrDefaultAsync();
+                if (t0 == null)
+                {
+                    t0 = new MyNetworkCategory { Parent = d1, Title = "Computer Science", Language = DefaultLanguage, SystemName = "computer-science", Excerpt = "Programming, algorithms, and software architecture." };
+                    dbContext.MyNetworkCategories.Add(t0);
+                }
+                MyNetworkCategory t1 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "computer-science").FirstOrDefaultAsync();
+                if (t1 == null)
+                {
+                    t1 = new MyNetworkCategory { Parent = d1, Title = "Data Science", Language = DefaultLanguage, SystemName = "data-science", Excerpt = "Data analysis, machine learning, and predictive modeling." };
+                    dbContext.MyNetworkCategories.Add(t1);
+                }
+                MyNetworkCategory t2 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "computer-science").FirstOrDefaultAsync();
+                if (t2 == null)
+                {
+                    t2 = new MyNetworkCategory { Parent = d1, Title = "Mathematics", Language = DefaultLanguage, SystemName = "mathematics", Excerpt = "Abstract reasoning, calculations, and theoretical models." };
+                    dbContext.MyNetworkCategories.Add(t2);
+                }
+                MyNetworkCategory t3 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "computer-science").FirstOrDefaultAsync();
+                if (t3 == null)
+                {
+                    t3 = new MyNetworkCategory { Parent = d1, Title = "Engineering", Language = DefaultLanguage, SystemName = "engineering", Excerpt = "Designing and building systems (mechanical, electrical, civil)." };
+                    dbContext.MyNetworkCategories.Add(t3);
+                }
+                MyNetworkCategory t4 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "ai-machine-learning").FirstOrDefaultAsync();
+                if (t4 == null)
+                {
+                    t4 = new MyNetworkCategory { Parent = d1, Title = "AI & Machine Learning", Language = DefaultLanguage, SystemName = "ai-machine-learning", Excerpt = "Intelligent systems and automation." };
+                    dbContext.MyNetworkCategories.Add(t4);
+                }
+                MyNetworkCategory t5 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "cybersecurity").FirstOrDefaultAsync();
+                if (t5 == null)
+                {
+                    t5 = new MyNetworkCategory { Parent = d1, Title = "Cybersecurity", Language = DefaultLanguage, SystemName = "cybersecurity", Excerpt = "Protecting digital assets and networks." };
+                    dbContext.MyNetworkCategories.Add(t5);
+                }
+                MyNetworkCategory t6 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "software-development").FirstOrDefaultAsync();
+                if (t6 == null)
+                {
+                    t6 = new MyNetworkCategory { Parent = d1, Title = "Software Development", Language = DefaultLanguage, SystemName = "software-development", Excerpt = "Creating applications and platforms." };
+                    dbContext.MyNetworkCategories.Add(t6);
+                }
+                MyNetworkCategory t7 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "robotics").FirstOrDefaultAsync();
+                if (t7 == null)
+                {
+                    t7 = new MyNetworkCategory { Parent = d1, Title = "Robotics", Language = DefaultLanguage, SystemName = "robotics", Excerpt = "Designing intelligent machines and automation systems." };
+                    dbContext.MyNetworkCategories.Add(t7);
+                }
+                MyNetworkCategory t8 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "robotics").FirstOrDefaultAsync();
+                if (t8 == null)
+                {
+                    t8 = new MyNetworkCategory { Parent = d1, Title = "Statistics", Language = DefaultLanguage, SystemName = "statistics", Excerpt = "Data interpretation and probability modeling." };
+                    dbContext.MyNetworkCategories.Add(t8);
+                }
+                MyNetworkCategory t9 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "systems-architecture").FirstOrDefaultAsync();
+                if (t9 == null)
+                {
+                    t9 = new MyNetworkCategory { Parent = d1, Title = "Systems Architecture", Language = DefaultLanguage, SystemName = "systems-architecture", Excerpt = "Structuring complex IT systems and networks." };
+                    dbContext.MyNetworkCategories.Add(t9);
+                }
+        }
+        public async Task SetupMyNetworkCategoriesAsync(ApplicationDbContext dbContext)
+        {
+            MyNetworkCategory d0 = await dbContext.MyNetworkCategories.Where(x => x.SystemName == "standard").FirstOrDefaultAsync();
+            if (d0 == null)
+            {
+                d0 = new MyNetworkCategory { Title = "Standard", SystemName = "standard", Excerpt = "", Language=DefaultLanguage };
+                dbContext.MyNetworkCategories.Add(d0);
+            }
+            await SetupCreativeDesignCategoriesAsync(dbContext);
+            await SetupScientificMedicalAsync(dbContext);
+            await SetupBusinessProfessionalAsync(dbContext);
+            await SetupEducationTrainingAsync(dbContext);
+            await SocialCulturalAsync(dbContext);
+            await SetupTravelLifestyleAsync(dbContext);
+            await SetupEntertainmentMediaAsync(dbContext);
+            await SetupLegalGovernmentAsync(dbContext);
+            await SetupEnvironmentalSustainabilityAsync(dbContext);
+        }
         public async Task SetupServiceCategoriesAsync(ApplicationDbContext dbContext)
         {
             ServiceCategory d1 = await dbContext.ServiceCategories.Where(x => x.SystemName == "entertainment").FirstOrDefaultAsync();
@@ -559,6 +1388,125 @@ namespace HenwoniDataModifierAPI.Automatic
             await dbContext.SaveChangesAsync();
         }
 
+        private async Task SetupLanguages2Async(ApplicationDbContext dbContext)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var t = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+
+            using (Stream stream = assembly.GetManifestResourceStream("HenwoniDataModifierAPI.Data.languages2.json"))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string json = reader.ReadToEnd();
+                    List<Data.External.Languages.NExLanguage2.ExLanguage2> jsonResponse = JsonSerializer.Deserialize<List<Data.External.Languages.NExLanguage2.ExLanguage2>>(json);
+                    int c = 0;
+                    foreach (Data.External.Languages.NExLanguage2.ExLanguage2 exLanguage in jsonResponse)
+                    {
+                        String systemName = exLanguage.Name.ToLower().GenerateSlug();
+                        Language c2 = await dbContext.Languages.Where(x => x.SystemName == systemName).FirstOrDefaultAsync();
+                        if (c2 != null)
+                        {
+                            c2.LocaleTitle = exLanguage.NativeName;
+                            c2.NativeName = exLanguage.NativeName;
+                        }
+                    }
+                    await dbContext.SaveChangesAsync();
+                }
+            }
+        }
+        private async Task SetupLanguages3Async(ApplicationDbContext dbContext)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var t = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+
+            using (Stream stream = assembly.GetManifestResourceStream("HenwoniDataModifierAPI.Data.languages3.json"))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string json = reader.ReadToEnd();
+                    List<Data.External.Languages.NExLanguage3.ExLanguage3> jsonResponse = JsonSerializer.Deserialize<List<Data.External.Languages.NExLanguage3.ExLanguage3>>(json);
+                    int c = 0;
+                    foreach (var exLanguage in jsonResponse)
+                    {
+                        String systemName = exLanguage.Name.ToLower().GenerateSlug();
+                        Language c2 = await dbContext.Languages.Where(x => x.SystemName == systemName || x.Code== exLanguage.Iso639_1).FirstOrDefaultAsync();
+                        if (c2 != null)
+                        {
+                            c2.ISO6391 = exLanguage.Iso639_1;
+                            c2.ISO6392 = exLanguage.Iso639_2;
+                            c2.ISO6393 = exLanguage.Iso639_3;
+                            c2.Code = exLanguage.Iso639_1;
+                            foreach (var cc in exLanguage.Countries)
+                            {
+                                var str1 = cc.Name.ToLower().GenerateSlug();
+                                var code = cc.Code.ToLower();
+                                var xx = await dbContext.Countries.Where(x => x.SystemName == str1 || x.ISO2 == code).FirstOrDefaultAsync();
+                                if (xx!=null)
+                                {
+                                    xx.ISO2 = code;
+                                    xx.Native = cc.NameLocal;
+                                }
+                                c2.Countries.Add(xx);
+                            }
+                        }
+                    }
+                    await dbContext.SaveChangesAsync();
+                }
+            }
+        }
+
+        private async Task SetupLanguages4Async(ApplicationDbContext dbContext)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var t = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+
+            using (Stream stream = assembly.GetManifestResourceStream("HenwoniDataModifierAPI.Data.languages4.json"))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string json = reader.ReadToEnd();
+                    List<Data.External.Languages.NExLanguage4.ExLanguage4> jsonResponse = JsonSerializer.Deserialize<List<Data.External.Languages.NExLanguage4.ExLanguage4>>(json);
+                    int c = 0;
+                    foreach (var language in await dbContext.Languages.ToListAsync())
+                    {
+                        var carC = jsonResponse.Where(x => x.Name.ToLower().Contains(language.Title.ToLower())).FirstOrDefault();
+                        if (carC!=null)
+                        {
+                            language.Charset = carC.Charset;
+                        }
+                    }
+                    await dbContext.SaveChangesAsync();
+                    foreach (var e in jsonResponse)
+                    {
+                        if (e.Name.Contains("(") && e.Name.Contains(")"))
+                        {
+                            var existing = await dbContext.Languages.Where(v => v.Title.ToLower() == e.Name.ToLower()).FirstOrDefaultAsync();
+                            if (existing==null)
+                            {
+                                existing = new Language()
+                                {
+                                    Title = e.Name,
+                                    Code = e.Charset
+                                };
+                                existing.SystemName = e.Name.GenerateSlug();
+                                await dbContext.Languages.AddAsync(existing);
+                            }
+                            string[] parts = e.Name.Split(new char[] { '(', ')' }, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (string part in parts)
+                            {
+                                var k = part.Trim().ToLower();
+                                if (k.Count()>2) {
+                                    var country = await dbContext.Countries.Where(x => x.Name.ToLower().Contains(k)).FirstOrDefaultAsync();
+                                    if (country!=null) existing.Countries.Add(country);
+                                }
+                            }
+                        }
+                    }
+                    await dbContext.SaveChangesAsync();
+                }
+            }
+        }
+
         public async Task SetupLanguagesAsync(ApplicationDbContext dbContext)
         {
             var assembly = Assembly.GetExecutingAssembly();
@@ -585,6 +1533,9 @@ namespace HenwoniDataModifierAPI.Automatic
                     await dbContext.SaveChangesAsync();
                 }
             }
+            await SetupLanguages2Async(dbContext);
+            await SetupLanguages3Async(dbContext);
+            await SetupLanguages4Async(dbContext);
         }
 
         public async Task SetupJobIndustriesAsync(ApplicationDbContext dbContext)

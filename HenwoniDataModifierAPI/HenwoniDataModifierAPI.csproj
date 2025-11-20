@@ -12,7 +12,12 @@
     <Content Remove="Data\currencies.json" />
     <Content Remove="Data\jobtitles.json" />
     <Content Remove="Data\languages.json" />
+    <Content Remove="Data\languages2.json" />
+    <Content Remove="Data\languages3.json" />
+    <Content Remove="Data\languages4.json" />
     <Content Remove="Data\services_categories.json" />
+    <Content Remove="Data\SiteMeta.json" />
+    <Content Remove="Data\Transilations\Pages.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,9 +29,14 @@
     <EmbeddedResource Include="Data\currencies.json" />
     <EmbeddedResource Include="Data\jobtitles.json" />
     <EmbeddedResource Include="Data\languages.json" />
+    <EmbeddedResource Include="Data\languages2.json" />
+    <EmbeddedResource Include="Data\languages3.json" />
+    <EmbeddedResource Include="Data\languages4.json" />
     <EmbeddedResource Include="Data\services_categories.json" />
+    <EmbeddedResource Include="Data\SiteMeta.json" />
     <EmbeddedResource Include="Data\skills.txt" />
     <EmbeddedResource Include="Data\jobtitlestext.txt" />
+    <EmbeddedResource Include="Data\Transilations\Pages.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,12 +46,17 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.4" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\NewFolder\" />
+    <Folder Include="Areas\User\Data\" />
+    <Folder Include="Areas\User\Views\" />
     <Folder Include="Data\Migrations\" />
     <Folder Include="Migrations\" />
   </ItemGroup>

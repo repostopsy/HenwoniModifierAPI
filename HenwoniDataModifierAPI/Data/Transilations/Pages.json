@@ -1,0 +1,249 @@
+﻿[
+	{
+		"name": "Pages.WelcomePage.Entry1",
+		"value": "The Hiring Platform"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry2",
+		"value": "First Job"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry3",
+		"value": "Browse Jobs"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry4",
+		"value": "Featured Jobs Hiring"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry5",
+		"value": "Applied"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry6",
+		"value": "Take Job Hire"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry7",
+		"value": "Cancels in 9 days"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry8",
+		"value": "We Make Things Better"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry9",
+		"value": "Our platform activities and statistics todate"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry10",
+		"value": "Organisations"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry11",
+		"value": "Job Hires"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry12",
+		"value": "Total Users"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry13",
+		"value": "Create New Job"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry14",
+		"value": "Create a new job to hire a candidate"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry15",
+		"value": "Cancel"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry16",
+		"value": "Create New Service"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry17",
+		"value": "You can sell your audios, videos, digital literature, scheduled live streams and your professional services on henwoni"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry18",
+		"value": "Get Your"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry19",
+		"value": "Now"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry20",
+		"value": "Streaming"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry21",
+		"value": "Pricing"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry22",
+		"value": "Run your business for free or sign up for premium."
+	},
+	{
+		"name": "Pages.WelcomePage.Entry23",
+		"value": "Services and Digital Media,"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry24",
+		"value": "Create services and digital media  to attract subscriptions or sales."
+	},
+	{
+		"name": "Pages.WelcomePage.Entry25",
+		"value": "Loking for long or short term work?"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry26",
+		"value": "Sign up to"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry27",
+		"value": "connect with companies"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry28",
+		"value": "Looking to hire?"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry29",
+		"value": "Instantly connect with candidates for your work and services"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry30",
+		"value": "Start interviewing"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry31",
+		"value": "Stay Connected"
+	},
+	{
+		"name": "Pages.WelcomePage.Entry32",
+		"value": "Quick Links"
+	},
+	{
+		"name": "AnyMenu.BrowseJobs",
+		"value": "Browse Jobs"
+	},
+	{
+		"name": "AnyMenu.Hire",
+		"value": "Hire"
+	},
+	{
+		"name": "AnyMenu.Funding",
+		"value": "Funding"
+	},
+	{
+		"name": "AnyMenu.Collaborations",
+		"value": "Collaborations"
+	},
+	{
+		"name": "AnyMenu.CreateJob",
+		"value": "Create Job"
+	},
+	{
+		"name": "AnyMenu.Pricing",
+		"value": "Pricing"
+	},
+	{
+		"name": "AnyMenu.Register",
+		"value": "Register"
+	},
+	{
+		"name": "AnyMenu.SignIn",
+		"value": "Sign In"
+	},
+	{
+		"name": "AnyMenu.Jobs",
+		"value": "Jobs"
+	},
+	{
+		"name": "AnyMenu.Candidates",
+		"value": "Candidates"
+	},
+	{
+		"name": "AnyMenu.Collaborations",
+		"value": "Collaborations"
+	},
+	{
+		"name": "AnyMenu.Insights",
+		"value": "Insights"
+	},
+	{
+		"name": "AnyMenu.FAQ",
+		"value": "FAQ"
+	},
+	{
+		"name": "AnyMenu.About",
+		"value": "About"
+	},
+	{
+		"name": "AnyMenu.Support",
+		"value": "Support"
+	},
+	{
+		"name": "AnyMenu.Contact",
+		"value": "Contact"
+	},
+	{
+		"name": "AnyMenu.HelpSupport",
+		"value": "Help & Support"
+	},
+	{
+		"name": "AnyMenu.PostAJob",
+		"value": "Post A Job"
+	},
+	{
+		"name": "AnyMenu.MyLocalJobs",
+		"value": "My Local Jobs"
+	},
+	{
+		"name": "AnyMenu.JobTitles",
+		"value": "Job Titles"
+	},
+	{
+		"name": "AnyMenu.JobsIn",
+		"value": "Jobs In"
+	},
+	{
+		"name": "AnyMenu.FindJobs",
+		"value": "Find Jobs"
+	},
+	{
+		"name": "AnyMenu.ServicesIn",
+		"value": "Services In"
+	},
+	{
+		"name": "AnyMenu.Services",
+		"value": "Services"
+	},
+	{
+		"name": "AnyMenu.FindCandidates",
+		"value": "Find Candidates"
+	},
+	{
+		"name": "SiteHeader.FindWork",
+		"value": "Find Work"
+	},
+	{
+		"name": "SiteHeader.Hire",
+		"value": "Hire"
+	}
+]
+	
+
+	
+
+	
+
+	
+
+	
+
+	
