@@ -1527,7 +1527,7 @@ namespace HenwoniDataModifierAPI.Automatic
                         if (c2 == null)
                         {
                             c2 = new Language { Title = exLanguage.Name, SystemName = systemName };
-                            dbContext.Languages.Add(c2);
+                            await dbContext.Languages.AddAsync(c2);
                         }
                     }
                     await dbContext.SaveChangesAsync();
@@ -1548,7 +1548,7 @@ namespace HenwoniDataModifierAPI.Automatic
                 {
                     dbContext.Languages.Remove(du);
                 }
-                dbContext.SaveChangesAsync();
+                await dbContext.SaveChangesAsync();
             }
             /////////////////////////////////////////////////////////////
         }
@@ -1559,7 +1559,7 @@ namespace HenwoniDataModifierAPI.Automatic
             if (y0 == null)
             {
                 y0 = new JobIndustry { Title = "Unknown", SystemName = "unknown" };
-                dbContext.JobIndustries.Add(y0);
+                await dbContext.JobIndustries.AddAsync(y0);
             }
             JobIndustry y1 = await dbContext.JobIndustries.Where(x => x.SystemName == "office-administrative-support").FirstOrDefaultAsync();
             if (y1 == null)
