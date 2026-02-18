@@ -14,8 +14,8 @@ namespace HenwoniDataModifierAPI.Models.Location
         public string? NumericCode { get; set; }
         public string? PhoneCode { get; set; }
         public string? Capital { get; set; }
-		public virtual Pricing.Currency DefaultCurrency { get; set; }
-		public virtual long DefaultCurrencyId { get; set; }
+		public virtual Pricing.Currency? DefaultCurrency { get; set; }
+		public long? DefaultCurrencyId { get; set; }
 		public string? TLD { get; set; }
         public string? Native { get; set; }
 		public virtual Continent? Continent { get; set; }

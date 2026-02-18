@@ -1,5 +1,7 @@
 ﻿
 
+using System.Text.Json.Serialization;
+
 namespace HenwoniDataModifierAPI.Models.Location
 {
 	public class Language
@@ -22,6 +24,7 @@ namespace HenwoniDataModifierAPI.Models.Location
         public string? NativeName { get; set; }
 		public string? LocaleTitle { get; set; }
         public string? Code { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Country> Countries { get; set; }
         public bool IsDeleted { get; set; } = false;
         public bool Active { get; set; } = true;

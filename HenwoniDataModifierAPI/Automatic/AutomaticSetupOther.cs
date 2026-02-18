@@ -500,6 +500,26 @@ namespace HenwoniDataModifierAPI.Automatic
 
         public static async Task SetupCurrenciesAsync(ApplicationDbContext dbContext)
         {
+            //########### Duplicate fix ################################
+            var cc = await dbContext.Currencies.ToListAsync();
+            foreach (var c in cc)
+            {
+                var ex = await dbContext.Currencies.Where(x => x.CurrencyName == c.CurrencyName && x.Id!=c.Id).ToListAsync();
+                if (ex.Count > 2)
+                {
+                    foreach (var v in ex)
+                    {
+                        var ec = await dbContext.Countries.Where(r => r.DefaultCurrency == v).ToListAsync();
+                        foreach (var j in ec)
+                        {
+                            j.DefaultCurrency = c;
+                        }
+                        dbContext.Currencies.Remove(v);
+                    }
+                    await dbContext.SaveChangesAsync();
+                }
+            }
+            //###########################################################
             var assembly = Assembly.GetExecutingAssembly();
             var t = Assembly.GetExecutingAssembly().GetManifestResourceNames();
 

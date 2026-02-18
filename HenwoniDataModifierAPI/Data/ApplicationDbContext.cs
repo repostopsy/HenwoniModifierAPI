@@ -13,6 +13,7 @@ using HenwoniDataModifierAPI.Models;
 using System;
 using HenwoniDataModifierAPI.Models.Project;
 using HenwoniDataModifierAPI.Models.Networks;
+using HenwoniDataModifierAPI.Models.Pricing;
 
 namespace HenwoniDataModifierAPI.Data
 {

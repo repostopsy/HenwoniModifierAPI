@@ -1,0 +1,118 @@
+﻿[
+  {
+    "country": "cayman-islands",
+    "currency": "KYD"
+  },
+  {
+    "country": "cameroon",
+    "currency": "XAF"
+  },
+  {
+    "country": "central-african-republic",
+    "currency": "XAF"
+  },
+  {
+    "country": "chad",
+    "currency": "XAF"
+  },
+  {
+    "country": "congo",
+    "currency": "CDF"
+  },
+  {
+    "country": "cook-islands",
+    "currency": "NZD"
+  },
+  {
+    "country": "curacao",
+    "currency": "XCG"
+  },
+  {
+    "country": "denmark",
+    "currency": "DKK"
+  },
+  {
+    "country": "equatorial-guinea",
+    "currency": "XAF"
+  },
+  {
+    "country": "faroe-islands",
+    "currency": "DKK"
+  },
+  {
+    "country": "french-polynesia",
+    "currency": "XPF"
+  },
+  {
+    "country": "gabon",
+    "currency": "XAF"
+  },
+  {
+    "country": "greenland",
+    "currency": "DKK"
+  },
+  {
+    "country": "guernsey-and-alderney",
+    "currency": "GBP"
+  },
+  {
+    "country": "israel",
+    "currency": "ILS"
+  },
+  {
+    "country": "jersey",
+    "currency": "GBP"
+  },
+  {
+    "country": "liechtenstein",
+    "currency": "CHF"
+  },
+  {
+    "country": "man-isle-of",
+    "currency": "GBP"
+  },
+  {
+    "country": "new-caledonia",
+    "currency": "XPF"
+  },
+  {
+    "country": "new-zealand",
+    "currency": "NZD"
+  },
+  {
+    "country": "niue",
+    "currency": "NZD"
+  },
+  {
+    "country": "palestinian-territory-occupied",
+    "currency": "ILS"
+  },
+  {
+    "country": "pitcairn-island",
+    "currency": "NZD"
+  },
+  {
+    "country": "sint-maarten-dutch-part",
+    "currency": "XCG"
+  },
+  {
+    "country": "south-georgia",
+    "currency": "GBP"
+  },
+  {
+    "country": "switzerland",
+    "currency": "CHF"
+  },
+  {
+    "country": "tokelau",
+    "currency": "NZD"
+  },
+  {
+    "country": "united-kingdom",
+    "currency": "GBP"
+  },
+  {
+    "country": "wallis-and-futuna-islands",
+    "currency": "XPF"
+  }
+]

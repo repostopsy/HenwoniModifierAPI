@@ -30,12 +30,6 @@
     "CurrencySymbol": "\u062F\u062C"
   },
   {
-    "Id": 6,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 7,
     "Title": "Angolan kwanza",
     "CurrencyName": "AOA",
@@ -84,12 +78,6 @@
     "CurrencySymbol": "$"
   },
   {
-    "Id": 15,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 16,
     "Title": "Azerbaijani manat",
     "CurrencyName": "AZN",
@@ -118,12 +106,6 @@
     "Title": "Belarusian ruble",
     "CurrencyName": "BYN",
     "CurrencySymbol": "Br"
-  },
-  {
-    "Id": 21,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
   },
   {
     "Id": 22,
@@ -324,12 +306,6 @@
     "CurrencySymbol": "\u0192"
   },
   {
-    "Id": 55,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 56,
     "Title": "Czech koruna",
     "CurrencyName": "CZK",
@@ -384,12 +360,6 @@
     "CurrencySymbol": "Nfk"
   },
   {
-    "Id": 65,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 66,
     "Title": "Lilangeni",
     "CurrencyName": "SZL",
@@ -420,34 +390,10 @@
     "CurrencySymbol": "FJ$"
   },
   {
-    "Id": 71,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
-    "Id": 72,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
-    "Id": 73,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 74,
     "Title": "CFP franc",
     "CurrencyName": "XPF",
     "CurrencySymbol": "\u20A3"
-  },
-  {
-    "Id": 75,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
   },
   {
     "Id": 76,
@@ -468,12 +414,6 @@
     "CurrencySymbol": "\u10DA"
   },
   {
-    "Id": 79,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 80,
     "Title": "Ghanaian cedi",
     "CurrencyName": "GHS",
@@ -486,12 +426,6 @@
     "CurrencySymbol": "\u00A3"
   },
   {
-    "Id": 82,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 83,
     "Title": "Danish krone",
     "CurrencyName": "DKK",
@@ -502,12 +436,6 @@
     "Title": "Eastern Caribbean dollar",
     "CurrencyName": "XCD",
     "CurrencySymbol": "$"
-  },
-  {
-    "Id": 85,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
   },
   {
     "Id": 86,
@@ -600,22 +528,10 @@
     "CurrencySymbol": "\u062F.\u0639"
   },
   {
-    "Id": 101,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 102,
     "Title": "Israeli new shekel",
     "CurrencyName": "ILS",
     "CurrencySymbol": "\u20AA"
-  },
-  {
-    "Id": 103,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
   },
   {
     "Id": 104,
@@ -660,12 +576,6 @@
     "CurrencySymbol": "$"
   },
   {
-    "Id": 111,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 112,
     "Title": "Kuwaiti dinar",
     "CurrencyName": "KWD",
@@ -682,12 +592,6 @@
     "Title": "Lao kip",
     "CurrencyName": "LAK",
     "CurrencySymbol": "\u20AD"
-  },
-  {
-    "Id": 115,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
   },
   {
     "Id": 116,
@@ -718,18 +622,6 @@
     "Title": "Swiss franc",
     "CurrencyName": "CHF",
     "CurrencySymbol": "CHf"
-  },
-  {
-    "Id": 121,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
-    "Id": 122,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
   },
   {
     "Id": 123,
@@ -768,22 +660,10 @@
     "CurrencySymbol": "CFA"
   },
   {
-    "Id": 129,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 130,
     "Title": "British pound",
     "CurrencyName": "GBP",
     "CurrencySymbol": "\u00A3"
-  },
-  {
-    "Id": 131,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
   },
   {
     "Id": 132,
@@ -798,12 +678,6 @@
     "CurrencySymbol": "\u20A8"
   },
   {
-    "Id": 134,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 135,
     "Title": "Mexican peso",
     "CurrencyName": "MXN",
@@ -816,22 +690,10 @@
     "CurrencySymbol": "L"
   },
   {
-    "Id": 137,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 138,
     "Title": "Mongolian t\u00F6gr\u00F6g",
     "CurrencyName": "MNT",
     "CurrencySymbol": "\u20AE"
-  },
-  {
-    "Id": 139,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
   },
   {
     "Id": 140,
@@ -874,12 +736,6 @@
     "Title": "Nepalese rupee",
     "CurrencyName": "NPR",
     "CurrencySymbol": "\u20A8"
-  },
-  {
-    "Id": 147,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
   },
   {
     "Id": 148,
@@ -1002,22 +858,10 @@
     "CurrencySymbol": "z\u0142"
   },
   {
-    "Id": 168,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 169,
     "Title": "Qatari riyal",
     "CurrencyName": "QAR",
     "CurrencySymbol": "\u0642.\u0631"
-  },
-  {
-    "Id": 170,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
   },
   {
     "Id": 171,
@@ -1056,40 +900,16 @@
     "CurrencySymbol": "$"
   },
   {
-    "Id": 177,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 178,
     "Title": "Eastern Caribbean dollar",
     "CurrencyName": "XCD",
     "CurrencySymbol": "$"
   },
   {
-    "Id": 179,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
-    "Id": 180,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 181,
     "Title": "Samoan t\u0101l\u0101",
     "CurrencyName": "WST",
     "CurrencySymbol": "SAT"
-  },
-  {
-    "Id": 182,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
   },
   {
     "Id": 183,
@@ -1140,18 +960,6 @@
     "CurrencySymbol": "\u0192"
   },
   {
-    "Id": 191,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
-    "Id": 192,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
-  },
-  {
     "Id": 193,
     "Title": "Solomon Islands dollar",
     "CurrencyName": "SBD",
@@ -1186,12 +994,6 @@
     "Title": "South Sudanese pound",
     "CurrencyName": "SSP",
     "CurrencySymbol": "\u00A3"
-  },
-  {
-    "Id": 199,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
   },
   {
     "Id": 200,
@@ -1354,12 +1156,6 @@
     "Title": "Vanuatu vatu",
     "CurrencyName": "VUV",
     "CurrencySymbol": "VT"
-  },
-  {
-    "Id": 227,
-    "Title": "Euro",
-    "CurrencyName": "EUR",
-    "CurrencySymbol": "\u20AC"
   },
   {
     "Id": 228,

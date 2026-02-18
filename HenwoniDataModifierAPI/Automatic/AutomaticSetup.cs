@@ -1536,6 +1536,21 @@ namespace HenwoniDataModifierAPI.Automatic
             await SetupLanguages2Async(dbContext);
             await SetupLanguages3Async(dbContext);
             await SetupLanguages4Async(dbContext);
+            //////////////////////////////////Remove duplicates//////////
+            var ll = await dbContext.Languages.ToListAsync();
+            List<string> done = new List<string>();
+            foreach (var l in ll)
+            {
+                if (done.Contains(l.SystemName)) continue;
+                done.Add(l.SystemName);
+                var dupli = await dbContext.Languages.Where(e => e.SystemName == l.SystemName && e.Id != l.Id).ToListAsync();
+                foreach (var du in dupli)
+                {
+                    dbContext.Languages.Remove(du);
+                }
+                dbContext.SaveChangesAsync();
+            }
+            /////////////////////////////////////////////////////////////
         }
 
         public async Task SetupJobIndustriesAsync(ApplicationDbContext dbContext)
